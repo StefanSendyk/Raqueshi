@@ -4,77 +4,331 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stefan Sendyk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --deep-purple: #1a0b2e;
+      --purple: #4c1d95;
+      --purple-light: #7c3aed;
+      --accent: #ff9d2f;
+      --accent-2: #ffc857;
+      --text: #f3eefc;
+      --text-dim: #c9baea;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 0 20px;
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, #6d28d9 0%, transparent 45%),
+        radial-gradient(circle at 90% 10%, #a855f7 0%, transparent 40%),
+        linear-gradient(180deg, var(--deep-purple) 0%, var(--purple) 55%, #2a0f4d 100%);
+      background-attachment: fixed;
       line-height: 1.6;
-      color: #222;
-      background: #fafafa;
     }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 90px 0 70px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .stripe {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 220%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        115deg,
+        transparent 0 40px,
+        rgba(255, 157, 47, 0.06) 40px 42px
+      );
+      transform: translateX(-50%) rotate(-3deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #2a1200;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
     h1 {
-      margin-bottom: 4px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 7vw, 3.6rem);
+      margin: 0;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #ffffff 0%, #e9d5ff 60%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+
+    .tagline {
+      margin-top: 14px;
+      color: var(--text-dim);
+      font-size: 1.05rem;
+    }
+
+    /* SECTIONS */
+    section {
+      margin-top: 56px;
+      position: relative;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .section-num {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--accent-2);
+      border: 1px solid rgba(255, 200, 87, 0.4);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
     h2 {
-      margin-top: 40px;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 4px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem;
+      margin: 0;
+      color: #fff;
     }
-    ul {
-      padding-left: 20px;
-    }
-    a {
-      color: #0366d6;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .contact-list {
+
+    /* PILLS (interests / skills) */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       list-style: none;
       padding: 0;
+      margin: 0;
     }
-    .note {
-      color: #777;
-      font-size: 0.9em;
+
+    .pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(6px);
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      color: var(--text);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 157, 47, 0.15);
+      border-color: var(--accent);
+    }
+
+    .pill.on-hold {
+      opacity: 0.65;
+    }
+
+    .pill .status {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--accent-2);
+      margin-top: 2px;
+    }
+
+    /* PROJECT CARD */
+    .card {
+      position: relative;
+      padding: 26px 28px;
+      border-radius: 18px;
+      background: linear-gradient(155deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255,157,47,0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      color: var(--accent-2);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-dim);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .contact-btn {
+      flex: 1 1 220px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .contact-btn:hover {
+      background: rgba(255, 157, 47, 0.12);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .contact-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--purple-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 70px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
 
-  <h1>Stefan Sendyk</h1>
+  <div class="hero">
+    <div class="stripe"></div>
+    <div class="hero-content">
+      <span class="badge">Personal CV</span>
+      <h1>Stefan Sendyk</h1>
+      <p class="tagline">Editor · Presenter · Pitch Builder</p>
+    </div>
+  </div>
 
-  <h2>Interests</h2>
-  <ul>
-    <li>Drama</li>
-    <li>Editing</li>
-    <li>Swimming</li>
-    <li>Padel, running and hiking <span class="note">(currently unavailable due to a broken hip — will resume after February 1st)</span></li>
-  </ul>
+  <div class="wrap">
 
-  <h2>Skills</h2>
-  <ul>
-    <li>Basic programming</li>
-    <li>Languages: Russian, English, Spanish (fluent), French (partial)</li>
-    <li>Advanced editing</li>
-    <li>High running speed <span class="note">(currently unavailable)</span></li>
-    <li>Navigation skills</li>
-    <li>Pitching</li>
-    <li>Presentation making</li>
-  </ul>
+    <section>
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Interests</h2>
+      </div>
+      <ul class="pills">
+        <li class="pill">Drama</li>
+        <li class="pill">Editing</li>
+        <li class="pill">Swimming</li>
+        <li class="pill on-hold">Padel<span class="status">on hold — back after Feb 1</span></li>
+        <li class="pill on-hold">Running<span class="status">on hold — back after Feb 1</span></li>
+        <li class="pill on-hold">Hiking<span class="status">on hold — back after Feb 1</span></li>
+      </ul>
+    </section>
 
-  <h2>Projects</h2>
-  <ul>
-    <li>EPlantic pitch</li>
-  </ul>
+    <section>
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Skills</h2>
+      </div>
+      <ul class="pills">
+        <li class="pill">Basic programming</li>
+        <li class="pill">Russian (fluent)</li>
+        <li class="pill">English (fluent)</li>
+        <li class="pill">Spanish (fluent)</li>
+        <li class="pill">French (partial)</li>
+        <li class="pill">Advanced editing</li>
+        <li class="pill on-hold">High running speed<span class="status">currently unavailable</span></li>
+        <li class="pill">Navigation skills</li>
+        <li class="pill">Pitching</li>
+        <li class="pill">Presentation making</li>
+      </ul>
+    </section>
 
-  <h2>Contact</h2>
-  <ul class="contact-list">
-    <li>Email: <a href="mailto:spsendyk@gmail.com">spsendyk@gmail.com</a></li>
-    <li>Email: <a href="mailto:spsendyk@icloud.com">spsendyk@icloud.com</a></li>
-  </ul>
+    <section>
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Projects</h2>
+      </div>
+      <div class="card">
+        <h3>EPlantic Pitch</h3>
+        <p>A pitch project by Stefan Sendyk.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Contact</h2>
+      </div>
+      <div class="contact-grid">
+        <a class="contact-btn" href="mailto:spsendyk@gmail.com">
+          <span class="contact-icon">✉️</span>
+          spsendyk@gmail.com
+        </a>
+        <a class="contact-btn" href="mailto:spsendyk@icloud.com">
+          <span class="contact-icon">✉️</span>
+          spsendyk@icloud.com
+        </a>
+      </div>
+    </section>
+
+    <footer>&copy; Stefan Sendyk</footer>
+  </div>
 
 </body>
 </html>
