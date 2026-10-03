@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stefan Sendyk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,900;1,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --lime: #c6f000;
+      --blue: #1c3ce8;
+      --yellow: #f5e400;
+      --ink: #0a0a0a;
+      --paper: #f7f7f1;
+      --paper-2: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Space Mono', monospace;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      position: relative;
+    }
+
+    /* Fixed side data strip, echoes the element-label tag */
+    .side-strip {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 46px;
+      height: 100vh;
+      background: var(--lime);
+      border-left: 3px solid var(--ink);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+
+    .side-strip .rot {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      padding: 70px 0 60px;
+      overflow: hidden;
+    }
+
+    .shard {
+      position: absolute;
+      z-index: 0;
+    }
+
+    .shard-1 {
+      top: -60px; left: -80px;
+      width: 260px; height: 260px;
+      background: var(--yellow);
+      clip-path: polygon(20% 0%, 100% 10%, 80% 100%, 0% 70%);
+      transform: rotate(-8deg);
+    }
+
+    .shard-2 {
+      top: 20px; right: -60px;
+      width: 220px; height: 220px;
+      background: var(--blue);
+      clip-path: polygon(0% 0%, 100% 20%, 70% 100%, 10% 80%);
+    }
+
+    .shard-3 {
+      bottom: -40px; left: 40%;
+      width: 180px; height: 140px;
+      background: var(--lime);
+      clip-path: polygon(10% 20%, 90% 0%, 100% 100%, 0% 80%);
+      opacity: 0.9;
+    }
+
+    .chrome-blob {
+      position: absolute;
+      top: -20px;
+      right: 10%;
+      width: 340px;
+      height: 340px;
+      z-index: 1;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .specimen-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--paper-2);
+      border: 3px solid var(--ink);
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 26px;
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .specimen-box .num {
+      background: var(--ink);
+      color: var(--lime);
+      padding: 2px 8px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: clamp(3rem, 11vw, 5.5rem);
+      margin: 0;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+
+    .tagline {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      background: var(--ink);
+      color: var(--paper);
+      display: inline-block;
+      padding: 6px 14px;
+    }
+
+    /* SECTIONS */
+    section {
+      margin-top: 70px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .section-num {
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 3px solid var(--ink);
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--paper-2);
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 900;
+      font-size: 1.7rem;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    /* CHIPS (interests / skills) */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .chip {
+      background: var(--paper-2);
+      border: 2.5px solid var(--ink);
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 10px 100%);
+      padding: 9px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    .chip:nth-child(3n+1) { background: var(--lime); }
+    .chip:nth-child(3n+2) { background: var(--yellow); }
+    .chip:nth-child(3n+3) { background: #cfe0ff; }
+
+    .chip:hover {
+      transform: translate(-2px, -2px);
+    }
+
+    .chip.on-hold {
+      background: var(--paper) !important;
+      opacity: 0.55;
+      text-decoration: line-through;
+    }
+
+    .chip .status {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 400;
+      text-decoration: none;
+      margin-top: 2px;
+      text-transform: none;
+    }
+
+    /* PROJECT CARD */
+    .card {
+      position: relative;
+      padding: 30px 30px;
+      background: var(--paper-2);
+      border: 3px solid var(--ink);
+      box-shadow: 10px 10px 0 var(--blue);
+    }
+
+    .card h3 {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 900;
+      margin: 0 0 10px;
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .card .tag {
+      position: absolute;
+      top: -14px;
+      right: 20px;
+      background: var(--yellow);
+      border: 2.5px solid var(--ink);
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .contact-btn {
+      flex: 1 1 240px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--paper-2);
+      border: 3px solid var(--ink);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      box-shadow: 6px 6px 0 var(--ink);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .contact-btn:hover {
+      transform: translate(6px, 6px);
+      box-shadow: 0 0 0 var(--ink);
+    }
+
+    .contact-icon {
+      width: 30px;
+      height: 30px;
+      background: var(--lime);
+      border: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 640px) {
+      .side-strip { display: none; }
+      .wrap { padding: 0 18px 80px; }
+      .chrome-blob { width: 200px; height: 200px; right: -20px; top: -10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="side-strip">
+    <span class="rot">PERSONAL CV</span>
+    <span class="rot">EST. 2026 · STEFAN SENDYK</span>
+  </div>
+
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="shard shard-1"></div>
+      <div class="shard shard-2"></div>
+      <div class="shard shard-3"></div>
+      <svg class="chrome-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="chrome" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="35%" stop-color="#9aa0a6"/>
+            <stop offset="55%" stop-color="#1a1a1a"/>
+            <stop offset="75%" stop-color="#c9c9c9"/>
+            <stop offset="100%" stop-color="#4a4a4a"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#chrome)" d="M40,120 C10,90 20,40 60,30 C90,22 100,55 120,45
+          C150,30 180,50 175,85 C170,115 130,110 120,130
+          C110,150 70,150 40,120 Z" />
+      </svg>
+
+      <div class="hero-content">
+        <div class="specimen-box">
+          <span class="num">01</span>
+          SS &middot; PERSONAL CV
+        </div>
+        <h1>Stefan<br>Sendyk</h1>
+        <p class="tagline">Editor &middot; Presenter &middot; Pitch Builder</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>Interests</h2>
+      </div>
+      <ul class="chips">
+        <li class="chip">Drama</li>
+        <li class="chip">Editing</li>
+        <li class="chip">Swimming</li>
+        <li class="chip on-hold">Padel<span class="status">on hold — back after Feb 1</span></li>
+        <li class="chip on-hold">Running<span class="status">on hold — back after Feb 1</span></li>
+        <li class="chip on-hold">Hiking<span class="status">on hold — back after Feb 1</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>Skills</h2>
+      </div>
+      <ul class="chips">
+        <li class="chip">Basic programming</li>
+        <li class="chip">Russian (fluent)</li>
+        <li class="chip">English (fluent)</li>
+        <li class="chip">Spanish (fluent)</li>
+        <li class="chip">French (partial)</li>
+        <li class="chip">Advanced editing</li>
+        <li class="chip on-hold">High running speed<span class="status">currently unavailable</span></li>
+        <li class="chip">Navigation skills</li>
+        <li class="chip">Pitching</li>
+        <li class="chip">Presentation making</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Projects</h2>
+      </div>
+      <div class="card">
+        <span class="tag">Pitch</span>
+        <h3>EPlantic Pitch</h3>
+        <p>A pitch project by Stefan Sendyk.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2>Contact</h2>
+      </div>
+      <div class="contact-grid">
+        <a class="contact-btn" href="mailto:spsendyk@gmail.com">
+          <span class="contact-icon">@</span>
+          spsendyk@gmail.com
+        </a>
+        <a class="contact-btn" href="mailto:spsendyk@icloud.com">
+          <span class="contact-icon">@</span>
+          spsendyk@icloud.com
+        </a>
+      </div>
+    </section>
+
+    <footer>&copy; Stefan Sendyk — PT: CV — Est. 2026</footer>
+  </div>
+
+</body>
+</html>
