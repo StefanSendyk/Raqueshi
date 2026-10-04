@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me — Stefan Sendyk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Inter+Tight:wght@400;500;800&family=Pinyon+Script&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  /* Palette taken from the "Mountaineering Backpack" slide:
+     deep rock navy, slate/steel mountain blues, cobalt title shadow,
+     snow/cream title fill, orange jacket, lavender backpack */
+  :root {
+    --ink: #070c16;
+    --navy: #0e1828;
+    --slate: #1c2b47;
+    --steel: #3e5b8c;
+    --cobalt: #2f6bff;
+    --ice: #eef2f6;
+    --cream: #f2ece1;
+    --orange: #ff7a3d;
+    --peach: #f6a878;
+    --lavender: #a9b0d6;
+    --muted: #8a97b2;
+    --hair: rgba(169, 176, 214, 0.18);
+
+    --display: 'Bodoni Moda', 'Didot', Georgia, serif;
+    --script: 'Pinyon Script', cursive;
+    --sans: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'Space Mono', ui-monospace, monospace;
+
+    --g: clamp(16px, 4vw, 48px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--ice);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img { display: block; max-width: 100%; }
+
+  /* film grain over everything */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--g); }
+
+  /* small Swiss-style labels */
+  .meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .meta b { font-weight: 800; display: block; }
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ================= HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 82vh;
+    min-height: 82svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px var(--g);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 55% 30%;
+    z-index: -2;
+    filter: saturate(1.1) contrast(1.05);
+    transform: scale(1.06);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift { to { transform: scale(1.12) translate(-1.5%, -1%); } }
+  .hero::before {               /* navy wash so the type reads */
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(7,12,22,0.55) 0%, rgba(7,12,22,0) 30%, rgba(7,12,22,0.15) 55%, var(--ink) 100%),
+      linear-gradient(90deg, rgba(14,24,40,0.75) 0%, rgba(14,24,40,0) 60%);
+  }
+  .hero::after {                /* VHS scanlines */
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+
+  .meta-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    color: var(--ice);
+  }
+  .meta-row > :nth-child(2) { text-align: center; }
+  .meta-row > :nth-child(3) { text-align: right; }
+
+  .rec { display: inline-flex; align-items: center; gap: 8px; }
+  .rec i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
+    animation: blink 1.2s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.15; } }
+
+  .hero-title { position: relative; margin-top: 4vh; }
+  .hero-title .script {
+    display: block;
+    font-family: var(--script);
+    font-size: clamp(44px, 7vw, 108px);
+    line-height: 1;
+    color: var(--ice);
+    margin-bottom: -0.32em;
+    margin-left: 0.2em;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 20px rgba(7,12,22,0.5);
+  }
+  .hero-title h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(64px, 13vw, 200px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    text-shadow: 0.035em 0.035em 0 var(--cobalt);
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 11;   /* thicker hairlines so A, U, M stay readable */
+  }
+  .hero-title .tracked {
+    margin-top: 22px;
+    font-family: var(--display);
+    font-size: clamp(15px, 2vw, 24px);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ice);
+  }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.6fr 1fr;
+    gap: 20px;
+    align-items: end;
+    margin-top: 28px;
+  }
+  .hero-foot .credit { color: var(--lavender); }
+  .scroll-cue { text-align: right; text-decoration: none; color: var(--ice); }
+  .scroll-cue span { display: inline-block; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(5px); } }
+
+  /* ================= SECTIONS ================= */
+  section.block { position: relative; padding: clamp(36px, 4vw, 56px) 0; }
+  section.block.why { padding-top: 8px; }
+
+  .chapter-head {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(16px, 3vw, 40px);
+    flex-wrap: wrap;
+    margin-bottom: clamp(20px, 2.5vw, 32px);
+  }
+  .idx {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--cobalt);
+    text-shadow: 0 0 12px rgba(47,107,255,0.8);
+    padding-bottom: 1.4em;
+  }
+  .chapter-head h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.85;
+    color: var(--cream);
+    text-shadow: 0.03em 0.03em 0 var(--cobalt);
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 11;
+  }
+  .chapter-head h2 em {
+    font-family: var(--script);
+    font-style: normal;
+    font-size: 0.42em;
+    color: var(--orange);
+    text-shadow: 0 0 24px rgba(255,122,61,0.45);
+    display: block;
+    white-space: nowrap;
+    margin: -0.05em 0 0 1.4em;
+  }
+  .edit-grid .chapter-head h2 { font-size: clamp(48px, 6vw, 88px); }
+
+  .copy p { max-width: 560px; color: #d8dee9; }
+  .copy p + p { margin-top: 1em; }
+
+  /* ---------- INTRO ---------- */
+  .intro {
+    background:
+      radial-gradient(ellipse 50% 60% at 85% 40%, rgba(47,107,255,0.22), transparent 70%),
+      radial-gradient(ellipse 30% 40% at 75% 70%, rgba(255,122,61,0.16), transparent 70%),
+      var(--ink);
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+  }
+  .lead {
+    font-family: var(--display);
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1.12;
+    color: var(--cream);
+    margin: 18px 0 28px;
+    font-variation-settings: "opsz" 28;
+  }
+  .lead em { color: var(--orange); }
+
+  .subjects { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .subjects span {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 8px 14px;
+    border: 1px solid var(--hair);
+    border-radius: 999px;
+    color: var(--lavender);
+    background: rgba(28,43,71,0.4);
+    backdrop-filter: blur(6px);
+  }
+  .subjects span.on {
+    color: var(--ink);
+    background: var(--cream);
+    border-color: var(--cream);
+    box-shadow: 0 0 0 1px var(--cobalt), 4px 4px 0 var(--cobalt);
+  }
+
+  /* floating photo stack */
+  .stack { position: relative; height: clamp(340px, 34vw, 440px); }
+  .stack figure { position: absolute; margin: 0; }
+  .stack img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.55);
+  }
+  .stack .s1 { width: 54%; height: 58%; left: 0; top: 4%; transform: rotate(-6deg); z-index: 2; }
+  .stack .s2 { width: 50%; height: 36%; right: 0; top: 0; transform: rotate(5deg); z-index: 1; }
+  .stack .s3 { width: 46%; height: 56%; right: 6%; bottom: 0; transform: rotate(-2deg); z-index: 3; }
+  .stack .s3 img { outline: 2px solid var(--cobalt); outline-offset: 6px; box-shadow: 0 0 40px rgba(47,107,255,0.35), 0 30px 60px rgba(0,0,0,0.55); }
+  .stack figcaption, .tag {
+    position: absolute;
+    left: 10px;
+    bottom: -26px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    white-space: nowrap;
+  }
+  .brush {
+    position: absolute;
+    width: 82%;
+    height: 90px;
+    left: 4%;
+    top: 58%;
+    color: var(--orange);
+    transform: rotate(-9deg);
+    z-index: 0;
+    opacity: 0.95;
+  }
+  .scribble {
+    position: absolute;
+    width: 60%;
+    left: -8%;
+    bottom: 4%;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* ---------- FILM ---------- */
+  .film { background: linear-gradient(180deg, var(--ink), var(--navy) 40%, var(--navy)); }
+  .center-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(20px, 4vw, 56px);
+  }
+  .center-top .chapter-head { margin-bottom: 0; }
+  .center-top .copy p { max-width: 500px; }
+  .strip {
+    display: flex;
+    gap: clamp(20px, 3vw, 36px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 36px var(--g) 30px;
+    margin-top: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--steel) transparent;
+  }
+  .strip::-webkit-scrollbar { height: 6px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 3px; }
+  .poster {
+    position: relative;
+    flex: 0 0 clamp(150px, 15vw, 200px);
+    margin: 0;
+    scroll-snap-align: center;
+    transform: rotate(var(--r, 0deg)) translateY(var(--y, 0));
+    transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+  }
+  .poster img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 24px 50px rgba(0,0,0,0.6);
+    transition: box-shadow 0.45s ease;
+  }
+  .poster:hover { transform: rotate(0deg) translateY(-14px) scale(1.04); z-index: 2; }
+  .poster:hover img { box-shadow: 0 0 0 2px var(--cobalt), 0 0 50px rgba(47,107,255,0.55), 0 30px 60px rgba(0,0,0,0.6); }
+  .poster figcaption { margin-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .poster figcaption b { display: block; color: var(--cream); font-family: var(--sans); font-weight: 800; font-size: 15px; letter-spacing: 0.02em; margin-top: 2px; }
+  .drag-hint { text-align: center; }
+
+  /* ---------- MUSIC ---------- */
+  .music {
+    background:
+      radial-gradient(ellipse 45% 55% at 10% 60%, rgba(255,122,61,0.14), transparent 70%),
+      var(--navy);
+  }
+  .albums {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 50px 22px;
+    padding-top: 64px;
+  }
+  .album { position: relative; margin: 0; }
+  .album .sleeve { position: relative; aspect-ratio: 1; }
+  .album .sleeve img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.55);
+  }
+  .album .disc {
+    position: absolute;
+    inset: 5%;
+    border-radius: 50%;
+    z-index: 1;
+    background:
+      radial-gradient(circle, var(--ink) 0 5%, var(--orange) 5.5% 16%, #0c0c10 16.5% 18%, transparent 18.5%),
+      repeating-radial-gradient(circle, #121218 0 2px, #1b1b24 2px 3px);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 10px 30px rgba(0,0,0,0.6);
+    transform: translateY(-14%) rotate(0deg);
+    transition: transform 0.7s cubic-bezier(.2,.8,.2,1);
+  }
+  .album:hover .disc { transform: translateY(-42%) rotate(200deg); }
+  .album:nth-child(4n+2) .disc { background:
+      radial-gradient(circle, var(--ink) 0 5%, var(--cobalt) 5.5% 16%, #0c0c10 16.5% 18%, transparent 18.5%),
+      repeating-radial-gradient(circle, #121218 0 2px, #1b1b24 2px 3px); }
+  .album:nth-child(4n+3) .disc { background:
+      radial-gradient(circle, var(--ink) 0 5%, var(--lavender) 5.5% 16%, #0c0c10 16.5% 18%, transparent 18.5%),
+      repeating-radial-gradient(circle, #121218 0 2px, #1b1b24 2px 3px); }
+  .album:nth-child(4n+4) .disc { background:
+      radial-gradient(circle, var(--ink) 0 5%, var(--peach) 5.5% 16%, #0c0c10 16.5% 18%, transparent 18.5%),
+      repeating-radial-gradient(circle, #121218 0 2px, #1b1b24 2px 3px); }
+  .album figcaption { margin-top: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .album figcaption b { display: block; color: var(--cream); font-family: var(--sans); font-weight: 800; font-size: 14px; line-height: 1.3; letter-spacing: 0.01em; text-transform: none; }
+
+  /* ---------- EDITING ---------- */
+  .editing { background: linear-gradient(180deg, var(--navy), var(--ink)); }
+  .edit-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+  .timeline {
+    background: linear-gradient(180deg, rgba(28,43,71,0.55), rgba(14,24,40,0.85));
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 16px 18px 20px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+  }
+  .tl-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .tl-bar .tc { color: var(--cream); font-size: 15px; letter-spacing: 0.1em; }
+  .tl-preview {
+    position: relative;
+    margin: 14px 0;
+    aspect-ratio: 16 / 6.5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #000;
+  }
+  .tl-preview img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .tl-preview img.show { opacity: 1; }
+  .tl-preview::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.2) 0 1px, transparent 1px 3px);
+  }
+  .tl-preview .tag { left: 12px; bottom: 10px; z-index: 2; color: var(--ice); }
+  .ruler {
+    height: 18px;
+    margin-left: 40px;
+    background:
+      repeating-linear-gradient(90deg, rgba(169,176,214,0.45) 0 1px, transparent 1px 10%),
+      repeating-linear-gradient(90deg, rgba(169,176,214,0.2) 0 1px, transparent 1px 2%);
+    background-size: 100% 100%, 100% 45%;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+  .tracks { position: relative; }
+  .track {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    height: 54px;
+    border-top: 1px solid var(--hair);
+  }
+  .track > span { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .lane { position: relative; height: 40px; }
+  .clip {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background-size: cover;
+    background-position: center;
+    border: 1.5px solid var(--c, var(--cobalt));
+    overflow: hidden;
+  }
+  .clip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(14,24,40,0.75), rgba(14,24,40,0.1));
+  }
+  .clip b {
+    position: relative;
+    display: block;
+    padding: 3px 7px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--ice);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .wave {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 2px;
+    border-radius: 4px;
+    background: rgba(255,122,61,0.08);
+    border: 1px solid rgba(255,122,61,0.35);
+  }
+  .wave i { flex: 1; background: var(--orange); border-radius: 1px; opacity: 0.85; }
+  .wave.b { background: rgba(169,176,214,0.06); border-color: rgba(169,176,214,0.3); }
+  .wave.b i { background: var(--lavender); }
+  .playhead {
+    position: absolute;
+    top: -18px;
+    bottom: 0;
+    left: 40px;
+    width: 2px;
+    background: var(--orange);
+    box-shadow: 0 0 12px var(--orange);
+    pointer-events: none;
+    animation: play 14s linear infinite;
+  }
+  .playhead::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -6px;
+    border: 7px solid transparent;
+    border-top: 9px solid var(--orange);
+  }
+  @keyframes play { from { left: 40px; } to { left: 100%; } }
+
+
+  /* ---------- WHY ---------- */
+  .why {
+    overflow: hidden;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 22% 45% at 50% 105%, rgba(246,168,120,0.85), transparent 70%),
+      radial-gradient(ellipse 32% 70% at 50% 110%, rgba(255,122,61,0.55), transparent 70%),
+      radial-gradient(ellipse 55% 90% at 50% 115%, rgba(47,107,255,0.75), transparent 72%),
+      radial-gradient(ellipse 80% 100% at 50% 120%, rgba(62,91,140,0.5), transparent 75%),
+      var(--ink);
+    padding-top: 8px;
+    padding-bottom: clamp(80px, 10vw, 130px);
+  }
+  .why p { max-width: 640px; margin: 0 auto; color: #dfe4ee; font-size: 18px; }
+  .buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .btn {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 28px;
+    border-radius: 999px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn.primary { background: var(--cream); color: var(--ink); box-shadow: 4px 4px 0 var(--cobalt); }
+  .btn.primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--cobalt), 0 0 30px rgba(47,107,255,0.5); }
+  .btn.ghost { color: var(--cream); border: 1px solid rgba(242,236,225,0.5); backdrop-filter: blur(8px); background: rgba(7,12,22,0.25); }
+  .btn.ghost:hover { border-color: var(--orange); color: var(--orange); box-shadow: 0 0 24px rgba(255,122,61,0.4); }
+
+  footer { padding: 28px var(--g); border-top: 1px solid var(--hair); }
+  footer .meta-row { color: var(--muted); }
+  .credits { margin-top: 14px; font-size: 11px; line-height: 1.5; color: #5d6a85; }
+
+  /* ---------- scroll reveal (only when JS runs) ---------- */
+  .js .rv { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.8,.2,1); }
+  .js .rv.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .rv { opacity: 1; transform: none; }
+  }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width: 960px) {
+    .intro-grid, .edit-grid { grid-template-columns: 1fr; }
+    .center-top { justify-content: flex-start; }
+    .albums { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .stack { max-width: 520px; width: 100%; margin: 20px auto 30px; }
+    .hero-foot { grid-template-columns: 1fr 1fr; }
+    .hero-foot .credit { grid-column: span 2; order: 3; }
+    .scroll-cue { order: 4; grid-column: span 2; text-align: left; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .meta-row { grid-template-columns: 1fr 1fr; }
+    .meta-row > :nth-child(2) { display: none; }
+    .albums { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 14px; }
+    .album figcaption { font-size: 10px; }
+    .album figcaption b { font-size: 12px; }
+    .track { grid-template-columns: 28px 1fr; height: 44px; }
+    .lane { height: 32px; }
+    .ruler { margin-left: 28px; }
+    .playhead { left: 28px; animation-name: play-sm; }
+    @keyframes play-sm { from { left: 28px; } to { left: 100%; } }
+    .clip b { font-size: 9px; padding: 2px 5px; }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <img class="hero-bg" src="media_photos_hq/glendale_archives.jpg" alt="Grainy analogue video still of a man on a beach at dusk, with a sun flare behind him">
+
+  <div class="meta-row meta">
+    <div><b>Media Studies</b>Portfolio</div>
+    <div><span class="rec"><i></i>Rec</span></div>
+    <div><b>Stefan</b>Sendyk</div>
+  </div>
+
+  <div class="hero-title">
+    <span class="script">Stefan Sendyk</span>
+    <h1>ABOUT ME</h1>
+    <p class="tracked">Film · Music · Editing</p>
+  </div>
+
+  <div class="hero-foot meta">
+    <div><b>School</b>Aloha College</div>
+    <div><b>Level</b>A Level</div>
+    <div class="credit"><b>Still</b>Glendale Archives — analogue horror series, YouTube</div>
+    <a class="scroll-cue" href="#intro"><b>Scroll</b><span>↓</span></a>
+  </div>
+</header>
+
+<!-- ================= INTRO ================= -->
+<section class="block intro" id="intro">
+  <div class="wrap intro-grid">
+    <div class="copy rv">
+      <div class="mono">00 — Intro</div>
+      <p class="lead">My name is Stefan Sendyk and I'm studying A Levels at <em>Aloha College.</em></p>
+      <p>Although my other subjects are largely analytical and academically focused, I chose Media Studies because I wanted to develop a different side of my abilities. I see it as an opportunity to combine creativity with analytical thinking — something I didn't get the chance to develop during my IGCSEs — and to gain knowledge and practical experience that I hope will be valuable for my future career.</p>
+      <div class="subjects">
+        <span class="on">Media Studies</span>
+        <span>Mathematics</span>
+        <span>Business Studies</span>
+        <span>Physics</span>
+        <span>EPQ</span>
+      </div>
+    </div>
+
+    <div class="stack rv">
+      <svg class="brush" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <filter id="rough" x="-10%" y="-40%" width="120%" height="180%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035 0.6" numOctaves="3" seed="4" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="26"/>
+          </filter>
+        </defs>
+        <rect x="20" y="30" width="560" height="60" fill="currentColor" filter="url(#rough)"/>
+      </svg>
+      <figure class="s1"><img src="media_photos_hq/skogafoss.jpg" alt="Skógafoss waterfall, Iceland" style="object-position:50% 60%"><figcaption>Fig. 01 — Skógafoss</figcaption></figure>
+      <figure class="s2"><img src="media_photos_hq/camera.jpg" alt="Silver Sony Cyber-shot digital camera"><figcaption>Fig. 02 — Cyber-shot</figcaption></figure>
+      <figure class="s3"><img src="media_photos_hq/flower.jpg" alt="Red spider lily on a black background"><figcaption>Fig. 03 — Spider lily</figcaption></figure>
+      <svg class="scribble" viewBox="0 0 400 140" aria-hidden="true">
+        <path d="M6 110 C 80 20, 150 20, 120 70 S 40 130, 190 60 C 260 25, 300 120, 394 30" fill="none" stroke="#eef2f6" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 01 FILM ================= -->
+<section class="block film" id="film">
+  <div class="wrap center-top">
+    <div class="chapter-head rv">
+      <span class="idx">01 /</span>
+      <h2>Film<em>&amp; cinema</em></h2>
+    </div>
+    <div class="copy rv">
+      <p>My interest in film and cinematography has been present from a young age, as it has been an important part of my family background. Being exposed to the industry through my family has given me an appreciation for the creativity, planning and collaboration that go into producing content, and has encouraged me to explore filmmaking myself.</p>
+    </div>
+  </div>
+
+  <div class="strip rv" aria-label="Film posters — scroll sideways">
+    <figure class="poster" style="--r:-4deg"><img src="media_photos_hq/pulp_fiction.jpg" alt="Pulp Fiction poster" loading="lazy"><figcaption>Poster 01<b>Pulp Fiction</b></figcaption></figure>
+    <figure class="poster" style="--r:3deg; --y:14px"><img src="media_photos_hq/the_matrix.jpg" alt="The Matrix poster" loading="lazy"><figcaption>Poster 02<b>The Matrix</b></figcaption></figure>
+    <figure class="poster" style="--r:-2deg"><img src="media_photos_hq/perks.jpg" alt="The Perks of Being a Wallflower poster" loading="lazy"><figcaption>Poster 03<b>The Perks of Being a Wallflower</b></figcaption></figure>
+    <figure class="poster" style="--r:4deg; --y:10px"><img src="media_photos_hq/real_steel.jpg" alt="Real Steel poster" loading="lazy"><figcaption>Poster 04<b>Real Steel</b></figcaption></figure>
+    <figure class="poster" style="--r:-3deg"><img src="media_photos_hq/into_the_wild.jpg" alt="Into the Wild poster" loading="lazy"><figcaption>Poster 05<b>Into the Wild</b></figcaption></figure>
+    <figure class="poster" style="--r:2deg; --y:16px"><img src="media_photos_hq/limitless.jpg" alt="Limitless poster" loading="lazy"><figcaption>Poster 06<b>Limitless</b></figcaption></figure>
+    <figure class="poster" style="--r:-4deg"><img src="media_photos_hq/rush_hour.jpg" alt="Rush Hour poster" loading="lazy"><figcaption>Poster 07<b>Rush Hour</b></figcaption></figure>
+    <figure class="poster" style="--r:3deg; --y:14px"><img src="media_photos_hq/hail_mary.jpg" alt="Project Hail Mary poster" loading="lazy"><figcaption>Poster 08<b>Project Hail Mary</b></figcaption></figure>
+    <figure class="poster" style="--r:-2deg"><img src="media_photos_hq/500_days_of_summer.jpg" alt="(500) Days of Summer poster" loading="lazy"><figcaption>Poster 09<b>(500) Days of Summer</b></figcaption></figure>
+    <figure class="poster" style="--r:4deg; --y:10px"><img src="media_photos_hq/fight_club.jpg" alt="Fight Club poster" loading="lazy"><figcaption>Poster 10<b>Fight Club</b></figcaption></figure>
+    <figure class="poster" style="--r:-3deg"><img src="media_photos_hq/the_martian.jpg" alt="The Martian poster" loading="lazy"><figcaption>Poster 11<b>The Martian</b></figcaption></figure>
+    <figure class="poster" style="--r:2deg; --y:16px"><img src="media_photos_hq/taxi.jpg" alt="Taxi poster" loading="lazy"><figcaption>Poster 12<b>Taxi</b></figcaption></figure>
+    <figure class="poster" style="--r:-4deg"><img src="media_photos_hq/pacific_rim.jpg" alt="Pacific Rim poster" loading="lazy"><figcaption>Poster 13<b>Pacific Rim</b></figcaption></figure>
+    <figure class="poster" style="--r:3deg; --y:14px"><img src="media_photos_hq/maze_runner.jpg" alt="The Maze Runner poster" loading="lazy"><figcaption>Poster 14<b>The Maze Runner</b></figcaption></figure>
+  </div>
+  <div class="wrap drag-hint mono">← Scroll sideways →</div>
+</section>
+
+<!-- ================= 02 MUSIC ================= -->
+<section class="block music" id="music">
+  <div class="wrap">
+    <div class="center-top">
+      <div class="chapter-head rv">
+        <span class="idx">02 /</span>
+        <h2>Music<em>&amp; sound</em></h2>
+      </div>
+      <div class="copy rv">
+        <p>Music is another major influence on me. I completed music school back in 2023 and continue to listen to a wide range of music in my free time. This has made me particularly interested in the relationship between sound and visual media.</p>
+      </div>
+    </div>
+
+    <div class="albums rv">
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/arctic_monkeys.jpg" alt="Cover art: Whatever People Say I Am, That's What I'm Not" loading="lazy"></div>
+        <figcaption>Arctic Monkeys<b>Whatever People Say I Am, That's What I'm Not</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/dark_red.jpg" alt="Cover art: Dark Red" loading="lazy"></div>
+        <figcaption>Steve Lacy<b>Dark Red</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/demon_days.jpg" alt="Cover art: Demon Days" loading="lazy"></div>
+        <figcaption>Gorillaz<b>Demon Days</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/vhs.jpg" alt="Cover art: VHS" loading="lazy"></div>
+        <figcaption>Mattyeux<b>VHS</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/third_eye_blind.jpg" alt="Cover art: Semi-Charmed Life" loading="lazy"></div>
+        <figcaption>Third Eye Blind<b>Semi-Charmed Life</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/glaza.jpg" alt="Cover art: Глаза боятся" loading="lazy"></div>
+        <figcaption>Дайте танк (!)<b>Глаза боятся</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/oh_que_sera.jpg" alt="Cover art: Oh, Qué Será?" loading="lazy"></div>
+        <figcaption>Willie Colón<b>Oh, Qué Será?</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/the_cure.jpg" alt="Cover art: Greatest Hits" loading="lazy"></div>
+        <figcaption>The Cure<b>Greatest Hits</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/loose_cannon.jpg" alt="Cover art: Loose Cannon" loading="lazy"></div>
+        <figcaption>Puzzle<b>Loose Cannon</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/jamiroquai.jpg" alt="Cover art: Travelling Without Moving" loading="lazy"></div>
+        <figcaption>Jamiroquai<b>Travelling Without Moving</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/lovers_rock.jpg" alt="Cover art: Lovers Rock" loading="lazy"></div>
+        <figcaption>TV Girl<b>Lovers Rock</b></figcaption>
+      </figure>
+      <figure class="album">
+        <div class="sleeve"><span class="disc"></span><img src="media_photos_hq/vibes.jpg" alt="Cover art: Vibes" loading="lazy"></div>
+        <figcaption>Vacations<b>Vibes</b></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 EDITING ================= -->
+<section class="block editing" id="editing">
+  <div class="wrap edit-grid">
+    <div>
+      <div class="chapter-head rv">
+        <span class="idx">03 /</span>
+        <h2>Editing<em>&amp; story</em></h2>
+      </div>
+      <div class="copy rv">
+        <p>Over the past two years I have developed a strong interest in video editing. I began editing clips and scenes from different television shows and films, gradually developing my understanding of pacing, transitions, sound and visual storytelling. This hobby eventually led me to build an audience of 5,500 subscribers on TikTok.</p>
+        <p>Although I initially started editing simply because I enjoyed it, the experience taught me how creative decisions can influence an audience and how important it is to understand what makes content engaging.</p>
+      </div>
+    </div>
+
+    <div class="timeline rv" aria-hidden="true">
+      <div class="tl-bar mono">
+        <span class="rec"><i></i>Edit_01</span>
+        <span class="tc" id="tc">00:00:00:00</span>
+      </div>
+      <div class="tl-preview" id="preview">
+        <img class="show" src="media_photos_hq/still_fight_club.jpg" alt="">
+        <img src="media_photos_hq/still_into_the_wild.jpg" alt="">
+        <img src="media_photos_hq/glendale_archives.jpg" alt="">
+        <img src="media_photos_hq/still_pacific_rim.jpg" alt="">
+        <span class="tag" id="clipname">V1 — Fight Club</span>
+      </div>
+      <div class="ruler"></div>
+      <div class="tracks">
+        <div class="track"><span>V2</span><div class="lane">
+          <div class="clip" style="left:44%; width:28%; --c:var(--orange); background-image:url(media_photos_hq/glendale_archives.jpg)"><b>Glendale</b></div>
+        </div></div>
+        <div class="track"><span>V1</span><div class="lane">
+          <div class="clip" style="left:0; width:24%; background-image:url(media_photos_hq/still_fight_club.jpg)"><b>Fight Club</b></div>
+          <div class="clip" style="left:24.5%; width:30%; background-image:url(media_photos_hq/still_into_the_wild.jpg)"><b>Into the Wild</b></div>
+          <div class="clip" style="left:55%; width:22%; background-image:url(media_photos_hq/still_pulp_fiction.jpg)"><b>Pulp Fiction</b></div>
+          <div class="clip" style="left:77.5%; width:22.5%; background-image:url(media_photos_hq/still_pacific_rim.jpg)"><b>Pacific Rim</b></div>
+        </div></div>
+        <div class="track"><span>A1</span><div class="lane"><div class="wave" data-bars="70"></div></div></div>
+        <div class="track"><span>A2</span><div class="lane"><div class="wave b" style="left:10%; right:22%" data-bars="50"></div></div></div>
+        <div class="playhead"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= WHY MEDIA STUDIES ================= -->
+<section class="block why" id="why">
+  <div class="wrap">
+    <div class="mono rv" style="margin-bottom:16px">04 — Why Media Studies</div>
+    <p class="rv">I believe that my combination of analytical thinking, musical experience, interest in cinematography and practical editing experience gives me a strong foundation for Media Studies. Through this course, I hope to develop these skills further, experiment with different forms of media production and, most importantly, develop my own creative style and understanding of how media can communicate ideas to an audience.</p>
+    <div class="buttons rv">
+      <a class="btn primary" href="#">See my work →</a>
+      <a class="btn ghost" href="mailto:spsendyk@icloud.com">Contact</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="meta-row meta">
+    <div><b>Stefan Sendyk</b>Media Studies</div>
+    <div><b>Aloha College</b>A Level</div>
+    <div><b>Contact</b>spsendyk@icloud.com</div>
+  </div>
+  <p class="credits">Photos: Skógafoss — Jakub Hałun, CC BY 4.0 · Red spider lily — Jim Evans, CC BY-SA 4.0 · Sony Cyber-shot — Adriancsr, CC0 (Wikimedia Commons). Posters &amp; stills via TMDB; cover art via Apple Music.</p>
+</footer>
+
+<script>
+  // fade sections in as they scroll into view
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  // audio waveforms for the editing timeline
+  document.querySelectorAll('.wave').forEach(w => {
+    const n = +w.dataset.bars;
+    for (let i = 0; i < n; i++) {
+      const bar = document.createElement('i');
+      const h = 20 + Math.abs(Math.sin(i * 0.55) * 50) + Math.random() * 30;
+      bar.style.height = Math.min(h, 100) + '%';
+      w.appendChild(bar);
+    }
+  });
+
+  // running timecode + preview window that follows the playhead
+  const tc = document.getElementById('tc');
+  const shots = document.querySelectorAll('#preview img');
+  const names = ['V1 — Fight Club', 'V1 — Into the Wild', 'V2 — Glendale Archives', 'V1 — Pacific Rim'];
+  const label = document.getElementById('clipname');
+  const loop = 14000;
+  const start = performance.now();
+  let current = 0;
+  function tick(now) {
+    const t = ((now - start) % loop) / loop;          // 0 → 1, in sync with the CSS playhead
+    const frames = Math.floor(t * 14 * 25);
+    const s = Math.floor(frames / 25), f = frames % 25;
+    tc.textContent = '00:00:' + String(s).padStart(2, '0') + ':' + String(f).padStart(2, '0');
+    const shot = t < 0.245 ? 0 : t < 0.44 ? 1 : t < 0.72 ? 2 : 3;
+    if (shot !== current) {
+      shots[current].classList.remove('show');
+      shots[shot].classList.add('show');
+      label.textContent = names[shot];
+      current = shot;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+</script>
+</body>
+</html>

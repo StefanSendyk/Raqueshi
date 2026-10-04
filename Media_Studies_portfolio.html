@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me — Stefan Sendyk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0b0b0b;
+    --panel: #141414;
+    --yellow: #f5c518;
+    --white: #f3efe6;
+    --muted: #a9a59c;
+    --line: #2a2a2a;
+    --serif: 'EB Garamond', Georgia, serif;
+    --label: 'Oswald', 'Arial Narrow', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* faint film grain over the whole page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 10;
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 72px 32px 96px;
+  }
+
+  .label {
+    font-family: var(--label);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+
+  /* ---------- header ---------- */
+  header { margin-bottom: 56px; }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(64px, 11vw, 132px);
+    line-height: 0.95;
+    color: var(--yellow);
+    letter-spacing: -0.02em;
+    margin: 14px 0 18px;
+  }
+
+  .tagline {
+    font-style: italic;
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--muted);
+  }
+
+  /* film-strip divider */
+  .filmstrip {
+    height: 22px;
+    margin: 64px 0;
+    background:
+      repeating-linear-gradient(90deg, var(--black) 0 10px, transparent 10px 26px) 0 4px / 100% 6px no-repeat,
+      repeating-linear-gradient(90deg, var(--black) 0 10px, transparent 10px 26px) 0 12px / 100% 6px no-repeat,
+      #1d1d1d;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------- hero: collage + intro ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .collage {
+    position: relative;
+    max-width: 440px;
+    justify-self: center;
+  }
+  .collage::before {               /* yellow offset frame behind the collage */
+    content: "";
+    position: absolute;
+    inset: 18px -18px -18px 18px;
+    border: 2px solid var(--yellow);
+  }
+  .collage img {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  .intro p + p { margin-top: 1em; }
+  .intro .lead {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+  .intro .lead strong { color: var(--yellow); font-weight: 500; }
+
+  .stat {
+    margin-top: 40px;
+    padding: 28px 32px;
+    border: 2px solid var(--yellow);
+    display: flex;
+    align-items: baseline;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .stat .num {
+    font-weight: 700;
+    font-size: 84px;
+    line-height: 1;
+    color: var(--yellow);
+  }
+  .stat .what { font-size: 20px; line-height: 1.35; }
+  .stat .what span { display: block; color: var(--muted); font-style: italic; font-size: 17px; }
+
+  .quote {
+    margin-top: 40px;
+    padding-left: 22px;
+    border-left: 3px solid var(--yellow);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--muted);
+  }
+
+  /* ---------- three columns ---------- */
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px;
+  }
+  .col {
+    border-top: 2px solid var(--yellow);
+    padding-top: 22px;
+  }
+  .col .num-tag {
+    font-family: var(--label);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+  }
+  .col h3 {
+    font-family: var(--label);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin: 4px 0 14px;
+  }
+  .col p { font-size: 18px; }
+
+  /* fill-in placeholder: Stefan replaces this himself */
+  .todo {
+    background: rgba(245, 197, 24, 0.15);
+    border-bottom: 1px dashed var(--yellow);
+    color: var(--yellow);
+    padding: 0 4px;
+  }
+
+  /* ---------- why media studies + buttons ---------- */
+  .why {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 56px 64px;
+  }
+  .why h2 {
+    font-weight: 500;
+    font-size: clamp(32px, 4vw, 46px);
+    line-height: 1.1;
+    margin: 12px 0 22px;
+  }
+  .why h2 em { color: var(--yellow); }
+  .why p { max-width: 760px; font-size: 20px; }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+  .btn {
+    font-family: var(--label);
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 30px;
+    border: 2px solid var(--yellow);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn.primary { background: var(--yellow); color: var(--black); }
+  .btn.ghost   { color: var(--yellow); }
+  .btn:hover   { transform: translateY(-2px); }
+  .btn.ghost:hover   { background: var(--yellow); color: var(--black); }
+  .btn.primary:hover { background: transparent; color: var(--yellow); }
+
+  footer {
+    margin-top: 64px;
+    font-family: var(--label);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  /* gentle fade-in on load */
+  .reveal { opacity: 0; transform: translateY(16px); animation: rise 0.8s ease forwards; }
+  .reveal.d1 { animation-delay: 0.1s; }
+  .reveal.d2 { animation-delay: 0.25s; }
+  .reveal.d3 { animation-delay: 0.4s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- tablet / phone ---------- */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; gap: 56px; }
+    .collage { max-width: 380px; }
+    .columns { grid-template-columns: 1fr; gap: 36px; }
+    .why { padding: 40px 28px; }
+  }
+  @media (max-width: 520px) {
+    body { font-size: 18px; }
+    .page { padding: 48px 16px 72px; }
+    .collage::before { inset: 10px -10px -10px 10px; }
+    .intro .lead { font-size: 21px; }
+    .stat { padding: 22px; }
+    .stat .num { font-size: 64px; }
+    .btn { flex: 1 1 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ===== HEADER ===== -->
+  <header class="reveal">
+    <div class="label">Media Studies Portfolio · Stefan Sendyk</div>
+    <h1>About me</h1>
+    <p class="tagline">A Level student at Aloha College — film, music and editing.</p>
+  </header>
+
+  <!-- ===== COLLAGE + INTRO ===== -->
+  <section class="hero">
+    <div class="collage reveal d1">
+      <img src="Media_Studies_collage.jpg" alt="Collage of film posters and photographs: Pulp Fiction, Fight Club, Into the Wild, Pacific Rim, Real Steel, a Sony Cyber-shot camera, headphones and landscapes">
+    </div>
+
+    <div class="intro reveal d2">
+      <p class="lead">My name is <strong>Stefan Sendyk</strong> and I'm studying A Levels at Aloha College. Alongside Media Studies, I study Mathematics, Business Studies, Physics and an EPQ.</p>
+      <p>Although my other subjects are largely analytical and academically focused, I chose Media Studies because I wanted to develop a different side of my abilities. I see it as an opportunity to combine creativity with analytical thinking — something I didn't get the chance to develop during my IGCSEs — and to gain knowledge and practical experience that I hope will be valuable for my future career.</p>
+
+      <div class="stat">
+        <div class="num">5,500</div>
+        <div class="what">subscribers on TikTok
+          <span>built by editing scenes from TV shows and films</span>
+        </div>
+      </div>
+
+      <p class="quote">“Creative decisions can influence an audience.”</p>
+    </div>
+  </section>
+
+  <div class="filmstrip" aria-hidden="true"></div>
+
+  <!-- ===== FILM / MUSIC / EDITING ===== -->
+  <section class="columns">
+    <article class="col reveal d1">
+      <div class="num-tag">01</div>
+      <h3>Film</h3>
+      <p>My interest in film and cinematography has been present from a young age, as it has been an important part of my family background. Being exposed to the industry through <span class="todo">my [family member]</span> has given me an appreciation for the creativity, planning and collaboration that go into producing content, and has encouraged me to explore filmmaking myself.</p>
+    </article>
+
+    <article class="col reveal d2">
+      <div class="num-tag">02</div>
+      <h3>Music</h3>
+      <p>Music is another major influence on me. I completed music school back in 2023 and continue to listen to a wide range of music in my free time. This has made me particularly interested in the relationship between sound and visual media.</p>
+    </article>
+
+    <article class="col reveal d3">
+      <div class="num-tag">03</div>
+      <h3>Editing</h3>
+      <p>Over the past two years I have developed a strong interest in video editing. I began editing clips and scenes from different TV shows and films, gradually developing my understanding of pacing, transitions, sound and visual storytelling. I started simply because I enjoyed it, but it taught me how creative decisions influence an audience — and what makes content engaging.</p>
+    </article>
+  </section>
+
+  <div class="filmstrip" aria-hidden="true"></div>
+
+  <!-- ===== WHY MEDIA STUDIES ===== -->
+  <section class="why reveal">
+    <div class="label">Why Media Studies</div>
+    <h2>Analytical thinking, music and editing — <em>one foundation.</em></h2>
+    <p>I believe that my combination of analytical thinking, musical experience, interest in cinematography and practical editing experience gives me a strong foundation for Media Studies. Through this course, I hope to develop these skills further, experiment with different forms of media production and, most importantly, develop my own creative style and understanding of how media can communicate ideas to an audience.</p>
+
+    <div class="buttons">
+      <a class="btn primary" href="#">See my work →</a>
+      <a class="btn ghost" href="mailto:spsendyk@icloud.com">Contact</a>
+    </div>
+  </section>
+
+  <footer>Stefan Sendyk · Media Studies · Aloha College</footer>
+
+</main>
+</body>
+</html>
