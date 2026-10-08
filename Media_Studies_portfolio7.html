@@ -186,6 +186,9 @@
     position: relative;
     min-height: 82vh;
     min-height: 82svh;
+    /* at least as tall as the video is at full width (1720×1284), so none of it is cut off */
+    width: 100%;                  /* fixed width, so the height follows the width (not the other way round) */
+    aspect-ratio: 1720 / 1284;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -193,19 +196,24 @@
     overflow: hidden;
     isolation: isolate;
   }
-  .hero-bg {
+  .hero-bg {                    /* the whole video at full width, nothing cropped or copied */
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 55%, transparent);
+            mask-image: linear-gradient(180deg, transparent, #000 12%, #000 55%, transparent);
     position: absolute;
-    inset: 0;
+    left: 0;
+    top: 50%;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 55% 30%;
+    height: auto;
+    transform: translateY(-50%);
     z-index: -2;
     filter: saturate(1.1) contrast(1.05);
-    transform: scale(1.06);
-    animation: drift 18s ease-in-out infinite alternate;
   }
-  @keyframes drift { to { transform: scale(1.12) translate(-1.5%, -1%); } }
+  @media (max-aspect-ratio: 11/10) {   /* tall screens (phones): the hero is taller than the video, so fade its top/bottom into the page */
+    .hero-bg {
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 75%, transparent);
+              mask-image: linear-gradient(180deg, transparent, #000 30%, #000 75%, transparent);
+    }
+  }
   .hero::before {               /* navy wash so the type reads */
     content: "";
     position: absolute;
@@ -335,6 +343,7 @@
   /* ---------- INTRO ---------- */
   .intro {
     background:
+      linear-gradient(180deg, var(--ink) 0%, rgba(7,12,22,0) 35%),   /* blends the top into the hero above */
       radial-gradient(ellipse 50% 60% at 85% 40%, rgba(47,107,255,0.22), transparent 70%),
       radial-gradient(ellipse 30% 40% at 75% 70%, rgba(255,122,61,0.16), transparent 70%),
       var(--ink);
@@ -603,15 +612,9 @@
   .album.current .ctrl { pointer-events: auto; }
   .album .deck button:hover, .album .deck button:focus-visible { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 20px rgba(255,122,61,0.6); outline: none; }
   .album.playing .spin-play { border-color: var(--orange); box-shadow: 0 0 18px rgba(255,122,61,0.5); }
-
-  /* the YouTube player is parked behind the current album's record + cover, so it's never seen */
-  .albums { position: relative; isolation: isolate; }
-  .yt-hide { position: absolute; z-index: -1; pointer-events: none; overflow: hidden; }
-  .yt-hide iframe { width: 320px; height: 320px; border: 0; }   /* YouTube pauses players under 200px, so it's full size but clipped by .yt-hide */
   .album figcaption .song { display: block; margin-top: 4px; text-transform: none; letter-spacing: 0.02em; color: var(--lavender); }
   .album figcaption .song::before { content: "♪ "; color: var(--orange); }
   .album.playing figcaption .song { color: var(--orange); }
-  .album.preview figcaption .song::after { content: " · 30s preview"; color: var(--muted); }
   .album:nth-child(4n+2) .disc { background:
       radial-gradient(circle, var(--ink) 0 5%, var(--cobalt) 5.5% 16%, #0c0c10 16.5% 18%, transparent 18.5%),
       repeating-radial-gradient(circle, #121218 0 2px, #1b1b24 2px 3px); }
@@ -895,6 +898,56 @@
     box-shadow: 0 0 0 1px rgba(47,107,255,0.5), 0 0 40px rgba(47,107,255,0.3), 0 30px 60px rgba(0,0,0,0.55);
   }
   .proj:hover .play { transform: scale(1.12); border-color: var(--orange); background: rgba(255,122,61,0.12); }
+
+  /* project video: cover image + play button, then the real video with its own controls */
+  .proj-frame video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+  }
+  .proj-frame button { font: inherit; color: inherit; cursor: pointer; }
+  .proj-frame button.play { padding: 0; background: rgba(7,12,22,0.35); backdrop-filter: blur(4px); z-index: 2; }
+  .proj-frame .corner { z-index: 2; pointer-events: none; text-shadow: 0 1px 6px rgba(0,0,0,0.7); }
+  .proj-frame.started .play, .proj-frame.started .corner { display: none; }   /* once it's playing, only the video + its controls */
+  .proj-frame:has(video)::after {   /* soft shade over the cover so the corner labels read; gone once it plays */
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(7,12,22,0.55), rgba(7,12,22,0) 30%, rgba(7,12,22,0) 65%, rgba(7,12,22,0.6));
+    transition: opacity 0.4s ease;
+  }
+  .proj-frame.started::after { opacity: 0; }
+  .fs-open, .fs-close {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(242,236,225,0.45);
+    border-radius: 999px;
+    background: rgba(7,12,22,0.6);
+    backdrop-filter: blur(6px);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.3s ease;
+  }
+  .fs-open { top: 10px; right: 10px; width: 34px; height: 34px; justify-content: center; padding: 0; opacity: 0; }
+  .fs-open svg { width: 15px; height: 15px; fill: none; stroke: var(--cream); stroke-width: 2; }
+  .proj:hover .fs-open, .proj-frame.started .fs-open, .fs-open:focus-visible { opacity: 1; }
+  .fs-open:hover, .fs-close:hover { background: var(--orange); border-color: var(--orange); }
+  .fs-close { display: none; top: 18px; right: 18px; padding: 10px 16px; font-size: 12px; }
+  /* full screen: the whole frame fills the screen, the video fits inside it, and the close button shows */
+  .proj-frame.is-full { border: 0; border-radius: 0; transform: none; background: #000; }
+  .proj-frame.is-full video { object-fit: contain; }
+  .proj-frame.is-full .fs-open { display: none; }
+  .proj-frame.is-full .fs-close { display: flex; }
   .proj figcaption { padding-top: 20px; }
   .proj .num { font-family: var(--mono); font-size: 12px; color: var(--cobalt); letter-spacing: 0.1em; }
   .proj h3 {
@@ -971,7 +1024,10 @@
 </section>
 
 <header class="hero">
-  <img class="hero-bg" src="media_photos_hq/glendale_archives.jpg" alt="Grainy analogue video still of a man on a beach at dusk, with a sun flare behind him">
+  <!-- looping background: hero_loop.mp4 is the CapCut clip cropped, with its end crossfaded into its
+       start so the loop has no jump. The still photo shows while it loads (and if video can't play). -->
+  <video class="hero-bg" src="media_photos_hq/hero_loop.mp4" poster="media_photos_hq/glendale_archives.jpg"
+         autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
 
   <div class="meta-row meta">
     <div><b>Media Studies</b>Portfolio</div>
@@ -988,7 +1044,7 @@
   <div class="hero-foot meta">
     <div><b>School</b>Aloha College</div>
     <div><b>Level</b>A Level</div>
-    <div class="credit"><b>Still</b>Glendale Archives — analogue horror series, YouTube</div>
+    <div class="credit"><b>Footage</b>Glendale Archives — analogue horror series, YouTube</div>
     <a class="scroll-cue" href="#intro"><b>Scroll</b><span>↓</span></a>
   </div>
 </header>
@@ -1076,55 +1132,54 @@
 
     <p class="list-intro rv">Some of my favorite albums:</p>
     <div class="albums rv">
-      <figure class="album" data-yt="cfetybygLkk" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/5a/23/bf/5a23bf18-d4d6-e689-c256-d449c25b2240/mzaf_17616096953447374853.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/5a/23/bf/5a23bf18-d4d6-e689-c256-d449c25b2240/mzaf_17616096953447374853.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play You Probably Couldn't See for the Lights but You Were Staring Straight at Me by Arctic Monkeys"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/arctic_monkeys.jpg" alt="Cover art: Whatever People Say I Am, That's What I'm Not" loading="lazy"></div>
         <figcaption>Arctic Monkeys<b>Whatever People Say I Am, That's What I'm Not</b><span class="song">You Probably Couldn't See for the Lights but You Were Staring Straight at Me</span></figcaption>
       </figure>
-      <figure class="album" data-yt="x-OzspEcQG8" data-start="196" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/20/9a/0c/209a0c57-2234-f660-e31e-9df4be89b1d6/mzaf_13317414679944797201.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/20/9a/0c/209a0c57-2234-f660-e31e-9df4be89b1d6/mzaf_13317414679944797201.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Dark Red by Steve Lacy"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/steve_lacys_demo.jpg" alt="Cover art: Steve Lacy's Demo" loading="lazy"></div>
         <figcaption>Steve Lacy<b>Steve Lacy's Demo</b><span class="song">Dark Red</span></figcaption>
       </figure>
-      <figure class="album" data-yt="HyHNuVaZJ-k" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9a/a7/90/9aa790e3-651e-9674-26ac-14aba4d3b8d1/mzaf_10454527198707970464.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9a/a7/90/9aa790e3-651e-9674-26ac-14aba4d3b8d1/mzaf_10454527198707970464.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Feel Good Inc. by Gorillaz"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/demon_days.jpg" alt="Cover art: Demon Days" loading="lazy"></div>
         <figcaption>Gorillaz<b>Demon Days</b><span class="song">Feel Good Inc.</span></figcaption>
       </figure>
-      <figure class="album" data-yt="hD1v_sRE0Ns" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/06/44/64/06446486-edc5-252e-e416-41efcdc873d0/mzaf_8493552738699201843.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/06/44/64/06446486-edc5-252e-e416-41efcdc873d0/mzaf_8493552738699201843.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play VHS by Mattyeux"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/vhs.jpg" alt="Cover art: VHS" loading="lazy"></div>
         <figcaption>Mattyeux<b>VHS</b><span class="song">VHS</span></figcaption>
       </figure>
-      <figure class="album" data-yt="KR5pPlE4rqc" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e7/77/7d/e7777db5-3b28-e029-f41a-6a6058275f76/mzaf_17353091552026184524.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e7/77/7d/e7777db5-3b28-e029-f41a-6a6058275f76/mzaf_17353091552026184524.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Semi-Charmed Life by Third Eye Blind"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/third_eye_blind.jpg" alt="Cover art: Third Eye Blind" loading="lazy"></div>
         <figcaption>Third Eye Blind<b>Third Eye Blind</b><span class="song">Semi-Charmed Life</span></figcaption>
       </figure>
-      <figure class="album" data-yt="J0LjaMlFhbQ" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/ef/e6/76/efe676fe-168d-9ce9-b4ea-a2cded2f16d2/mzaf_17708189509578124295.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/ef/e6/76/efe676fe-168d-9ce9-b4ea-a2cded2f16d2/mzaf_17708189509578124295.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Chuma by Дайте танк (!)"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/glaza.jpg" alt="Cover art: Glaza Boyatsya" loading="lazy"></div>
         <figcaption>Дайте танк (!)<b>Glaza Boyatsya</b><span class="song">Chuma</span></figcaption>
       </figure>
-      <figure class="album" data-yt="qoNrcSFZbWg" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b4/3a/e1/b43ae124-af70-5f00-27b2-de4101bfb46e/mzaf_12748465677760453989.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/b4/3a/e1/b43ae124-af70-5f00-27b2-de4101bfb46e/mzaf_12748465677760453989.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Oh, Qué Será? by Willie Colón"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/fantasmas.jpg" alt="Cover art: Fantasmas" loading="lazy"></div>
         <figcaption>Willie Colón<b>Fantasmas</b><span class="song">Oh, Qué Será?</span></figcaption>
       </figure>
-      <figure class="album" data-yt="_9bw_VtMUGA" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/95/70/00/9570000e-f428-fdad-bb85-8d271aa7ce71/mzaf_11892033893020340362.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/95/70/00/9570000e-f428-fdad-bb85-8d271aa7ce71/mzaf_11892033893020340362.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play New Person, Same Old Mistakes by Tame Impala"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/currents.jpg" alt="Cover art: Currents" loading="lazy"></div>
         <figcaption>Tame Impala<b>Currents</b><span class="song">New Person, Same Old Mistakes</span></figcaption>
       </figure>
-      <figure class="album" data-yt="v3KIlTfYIb4" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1e/51/74/1e517499-a31f-711d-2fae-2127ae21fd18/mzaf_6261262786490799287.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1e/51/74/1e517499-a31f-711d-2fae-2127ae21fd18/mzaf_6261262786490799287.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Loose Cannon by Puzzle"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/loose_cannon.jpg" alt="Cover art: X Hail" loading="lazy"></div>
         <figcaption>Puzzle<b>X Hail</b><span class="song">Loose Cannon</span></figcaption>
       </figure>
-      <figure class="album" data-yt="4JkIs37a2JE" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/69/a8/60/69a860a4-22e0-acf2-ee5e-0ee2adc6911e/mzaf_13346004038842782241.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/69/a8/60/69a860a4-22e0-acf2-ee5e-0ee2adc6911e/mzaf_13346004038842782241.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Virtual Insanity by Jamiroquai"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/jamiroquai.jpg" alt="Cover art: Travelling Without Moving" loading="lazy"></div>
         <figcaption>Jamiroquai<b>Travelling Without Moving</b><span class="song">Virtual Insanity</span></figcaption>
       </figure>
-      <figure class="album" data-yt="OqhoRXGeMW4" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c4/b2/8a/c4b28aad-e8be-fcff-358c-54a5bb28c1b5/mzaf_17296755912074596628.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c4/b2/8a/c4b28aad-e8be-fcff-358c-54a5bb28c1b5/mzaf_17296755912074596628.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Birds Don't Sing by TV Girl"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/lovers_rock.jpg" alt="Cover art: French Exit" loading="lazy"></div>
         <figcaption>TV Girl<b>French Exit</b><span class="song">Birds Don't Sing</span></figcaption>
       </figure>
-      <figure class="album" data-yt="jZNotX1WDjM" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/51/fc/99/51fc99e6-7561-55cc-426e-f3f05b7d38b3/mzaf_5103499897801990234.plus.aac.p.m4a">
+      <figure class="album" data-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/51/fc/99/51fc99e6-7561-55cc-426e-f3f05b7d38b3/mzaf_5103499897801990234.plus.aac.p.m4a">
         <div class="sleeve"><div class="disc-wrap"><span class="disc"></span><div class="deck"><button class="ctrl prev" type="button" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M11 6v12L2 12zM22 6v12l-9-6z"/></svg></button><button class="spin-play" type="button" aria-label="Play Young by Vacations"></button><button class="ctrl next" type="button" aria-label="Next song"><svg viewBox="0 0 24 24"><path d="M2 6v12l9-6zM13 6v12l9-6z"/></svg></button></div></div><img src="media_photos_hq/vibes.jpg" alt="Cover art: Vibes" loading="lazy"></div>
         <figcaption>Vacations<b>Vibes</b><span class="song">Young</span></figcaption>
       </figure>
-      <div class="yt-hide" aria-hidden="true"><div id="yt"></div></div>
     </div>
   </div>
 </section>
@@ -1196,10 +1251,14 @@
     </div>
     <div class="proj-grid">
       <figure class="proj rv">
-        <div class="proj-frame">
+        <div class="proj-frame" id="prj1">
+          <video src="media_photos_hq/project1.mp4" poster="media_photos_hq/project1_cover.jpg" preload="none" playsinline
+                 controlslist="nofullscreen nodownload" disablepictureinpicture></video>
           <span class="corner tl"><span class="rec"><i></i>PRJ_01</span></span>
-          <span class="play"></span>
-          <span class="corner br">--:--</span>
+          <button class="play" type="button" aria-label="Play Basic Filmmaking Project"></button>
+          <button class="fs-open" type="button" aria-label="Full screen" title="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          <button class="fs-close" type="button" aria-label="Close full screen">✕ Close full screen</button>
+          <span class="corner br">02:07</span>
         </div>
         <figcaption>
           <div class="num">Project 01</div>
@@ -1220,10 +1279,14 @@
         </figcaption>
       </figure>
       <figure class="proj rv">
-        <div class="proj-frame">
+        <div class="proj-frame" id="prj3">
+          <video src="media_photos_hq/project3.mp4" poster="media_photos_hq/project3_cover.jpg" preload="none" playsinline
+                 controlslist="nofullscreen nodownload" disablepictureinpicture></video>
           <span class="corner tl"><span class="rec"><i></i>PRJ_03</span></span>
-          <span class="play"></span>
-          <span class="corner br">--:--</span>
+          <button class="play" type="button" aria-label="Play Sound-Making Project"></button>
+          <button class="fs-open" type="button" aria-label="Full screen" title="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          <button class="fs-close" type="button" aria-label="Close full screen">✕ Close full screen</button>
+          <span class="corner br">01:21</span>
         </div>
         <figcaption>
           <div class="num">Project 03</div>
@@ -1241,7 +1304,7 @@
     <div><b>Aloha College</b>A Level</div>
     <div><b>Contact</b>spsendyk@icloud.com</div>
   </div>
-  <p class="credits">Photos: Skógafoss — Jakub Hałun, CC BY 4.0 · Red spider lily — Jim Evans, CC BY-SA 4.0 · Sony Cyber-shot — Adriancsr, CC0 (Wikimedia Commons). Posters &amp; stills via TMDB; cover art, app icons via Apple Music / App Store; songs play from YouTube.</p>
+  <p class="credits">Photos: Skógafoss — Jakub Hałun, CC BY 4.0 · Red spider lily — Jim Evans, CC BY-SA 4.0 · Sony Cyber-shot — Adriancsr, CC0 (Wikimedia Commons). Posters &amp; stills via TMDB; cover art, song previews &amp; app icons via Apple Music / App Store.</p>
 </footer>
 
 <script>
@@ -1259,64 +1322,46 @@
     update();
   }
 
+  // background video: respect "reduce motion" and pause it while it's scrolled out of view
+  const heroVid = document.querySelector('video.hero-bg');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) heroVid.pause();
+  else new IntersectionObserver(([e]) => { e.isIntersecting ? heroVid.play().catch(() => {}) : heroVid.pause(); }).observe(heroVid);
+
+  // project videos: play button starts the video (with its controls); full-screen button + close button
+  document.querySelectorAll('.proj-frame video').forEach(vid => {
+    const frame = vid.closest('.proj-frame');
+    const start = () => { frame.classList.add('started'); vid.controls = true; vid.play(); };
+    frame.querySelector('.play').addEventListener('click', start);
+    frame.querySelector('.fs-open').addEventListener('click', () => {
+      if (!frame.classList.contains('started')) start();
+      if (frame.requestFullscreen) frame.requestFullscreen();
+      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+      else if (vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();   // iPhone: the phone's own player (has a Done button)
+    });
+    frame.querySelector('.fs-close').addEventListener('click', () => {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    });
+  });
+  const markFull = () => {
+    const el = document.fullscreenElement || document.webkitFullscreenElement;
+    document.querySelectorAll('.proj-frame').forEach(f => f.classList.toggle('is-full', f === el));
+  };
+  document.addEventListener('fullscreenchange', markFull);
+  document.addEventListener('webkitfullscreenchange', markFull);
+
   // fade sections in as they scroll into view
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-  // album records: songs play from YouTube through a player hidden behind the current record.
-  // play/pause in the middle, << goes back to 0:00, >> skips to the next album (wraps round to the first)
-  const albumsBox = document.querySelector('.albums');
+  // album records: each disc plays a 30-second Apple Music preview of the song.
+  // play/pause in the middle, << goes back to the start of the preview, >> skips to the next album
+  // (next in the row, then the next row, and from the last album back round to the first)
   const albums = [...document.querySelectorAll('.album')];
-  const ytBox = document.querySelector('.yt-hide');
-  let yt = null, nowAlbum = null;
-
-  // sit the player under the middle of the current cover (cover image > record > player)
-  function park() {
-    const sleeve = (nowAlbum || albums[0]).querySelector('.sleeve');
-    const a = albumsBox.getBoundingClientRect(), r = sleeve.getBoundingClientRect();
-    const size = r.width * 0.5;
-    Object.assign(ytBox.style, {
-      left: (r.left - a.left + r.width / 4) + 'px',
-      top: (r.top - a.top + r.height / 4) + 'px',
-      width: size + 'px',
-      height: size + 'px'
-    });
-  }
-  park();
-  addEventListener("resize", park);
-  addEventListener("load", park);
-
-  // YouTube only plays on a page with a web address (http/https). Opened by double-clicking the
-  // file (file://) it refuses every video, so then — or if a video is blocked — the record plays
-  // the 30-second Apple preview instead, so pressing play always gives you music.
-  const canUseYT = location.protocol.startsWith('http');
   const audio = new Audio();
-  let mode = null;                                       // 'yt' or 'audio'
-
-  if (canUseYT) {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(tag);
-  }
-  window.onYouTubeIframeAPIReady = () => {
-    yt = new YT.Player('yt', {
-      playerVars: { playsinline: 1, controls: 0, disablekb: 1, rel: 0 },
-      events: {
-        onStateChange: e => { if (mode === 'yt') setPlaying(e.data === YT.PlayerState.PLAYING); },
-        onError: () => {                                 // video blocked here → use the preview
-          if (!nowAlbum || mode !== 'yt') return;
-          nowAlbum.dataset.blocked = '1';
-          playPreview(nowAlbum);
-        }
-      }
-    });
-  };
-  const ytReady = () => yt && yt.loadVideoById;
-
-  audio.addEventListener('play', () => { if (mode === 'audio') setPlaying(true); });
-  audio.addEventListener('pause', () => { if (mode === 'audio') setPlaying(false); });
+  let nowAlbum = null;
 
   function setPlaying(on) {
     if (!nowAlbum) return;
@@ -1324,47 +1369,31 @@
     const b = nowAlbum.querySelector('.spin-play');
     b.setAttribute('aria-label', (on ? 'Pause ' : 'Play ') + nowAlbum.querySelector('.song').textContent);
   }
+  // read the real state each time, so a late "pause" from the previous song can't mark the new one as stopped
+  const sync = () => setPlaying(!audio.paused);
+  ['play', 'playing', 'pause', 'ended'].forEach(ev => audio.addEventListener(ev, sync));
 
-  function playPreview(album) {
-    mode = 'audio';
-    if (ytReady()) yt.stopVideo();
-    album.classList.add('preview');
-    audio.src = album.dataset.src;
-    audio.play();
+  function playNow() {
+    // if the browser isn't ready yet, try again as soon as the song can play
+    audio.play().catch(() => audio.addEventListener('canplay', () => audio.play(), { once: true }));
   }
 
   function load(album) {
-    if (nowAlbum) nowAlbum.classList.remove('current', 'playing', 'preview');
-    audio.pause();
-    if (ytReady()) yt.stopVideo();
+    if (nowAlbum) { setPlaying(false); nowAlbum.classList.remove('current'); }
     nowAlbum = album;
     album.classList.add('current');
-    park();
-    if (ytReady() && !album.dataset.blocked) {
-      mode = 'yt';
-      yt.loadVideoById({ videoId: album.dataset.yt, startSeconds: +album.dataset.start || 0 });
-      setTimeout(() => {                                 // still nothing after 6s → use the preview
-        const st = yt.getPlayerState();
-        if (mode === 'yt' && nowAlbum === album && ![1, 2, 3].includes(st)) playPreview(album);
-      }, 6000);
-    } else {
-      playPreview(album);
-    }
-  }
-
-  function isPlaying() {
-    return mode === 'yt' ? yt.getPlayerState() === YT.PlayerState.PLAYING : !audio.paused;
+    audio.src = album.dataset.src;
+    playNow();                                            // play straight away (also used by >>)
   }
 
   albums.forEach((album, i) => {
     album.querySelector('.spin-play').addEventListener('click', () => {
       if (nowAlbum !== album) return load(album);
-      if (isPlaying()) mode === 'yt' ? yt.pauseVideo() : audio.pause();
-      else mode === 'yt' ? yt.playVideo() : audio.play();
+      audio.paused ? playNow() : audio.pause();
     });
     album.querySelector('.prev').addEventListener('click', () => {
-      if (mode === 'yt') { yt.seekTo(+album.dataset.start || 0, true); yt.playVideo(); }
-      else { audio.currentTime = 0; audio.play(); }
+      audio.currentTime = 0;
+      playNow();
     });
     album.querySelector('.next').addEventListener('click', () => {
       load(albums[(i + 1) % albums.length]);
