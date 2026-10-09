@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aloha Film Awards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #fdfdfb;
+    --ink: #111;
+    --red: #d42027;
+    --sans: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+    --logo: 'Archivo Black', 'Arial Black', sans-serif;
+    --hand: 'Caveat', cursive;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #1a1a1a; display: grid; place-items: center; grid-template-rows: 1fr auto;
+    gap: 14px; padding: 2vh 16px; font-family: var(--sans); }
+
+  /* ---------- the magazine cover: plain white, like a 70s TV listings cover ---------- */
+  .cover {
+    position: relative; overflow: hidden; container-type: size;
+    aspect-ratio: 9 / 16; height: min(88vh, calc((100vw - 32px) * 16 / 9));
+    background: var(--white); color: var(--ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  }
+  .cover.post { aspect-ratio: 4 / 5; height: min(88vh, calc((100vw - 32px) * 5 / 4)); }
+
+  .price { position: absolute; top: 2.6cqh; left: 5cqw; z-index: 5;
+    font: 500 3.5cqw/1 var(--sans); letter-spacing: -.01em; }
+  .price .dot { display: inline-block; width: .8em; height: .8em; border: .12em solid var(--ink); border-radius: 50%;
+    vertical-align: -.05em; margin-right: .25em; position: relative; }
+  .price .dot::after { content: ''; position: absolute; inset: .14em; border-radius: 50%; background: var(--ink); }
+
+  .mast { position: absolute; top: 5cqh; left: 5cqw; z-index: 5; width: max-content;
+    background: var(--red); color: #fff; border-radius: 3.2cqw; padding: 1.6cqw 3.4cqw 2.4cqw; text-align: center; }
+  .mast .big { font: 400 15.5cqw/.9 var(--logo); letter-spacing: -.035em; }
+  .mast .small { font: 400 6.8cqw/1 var(--logo); letter-spacing: .03em; margin-top: .4cqw; }
+
+  .lines { position: absolute; left: 5cqw; top: 23cqh; z-index: 5; width: 46cqw; }
+  .lines h2 { font: 500 6.7cqw/1.04 var(--sans); letter-spacing: -.025em; }
+  .lines .page { font: 500 2.6cqw/1 var(--sans); margin: .7cqh 0 0 22cqw; }
+  .lines .sub { font: 500 3.3cqw/1.18 var(--sans); letter-spacing: -.01em; margin-top: 2.2cqh; }
+  .lines .sub b { font-weight: 700; color: var(--red); }
+
+  .art { position: absolute; right: -2cqw; bottom: .5cqh; height: 74cqh; z-index: 4; }
+
+  .cover.post .mast { top: 6.6cqh; }
+  .cover.post .mast .big { font-size: 11.5cqw; }
+  .cover.post .mast .small { font-size: 5cqw; }
+  .cover.post .lines { top: 29cqh; width: 36cqw; }
+  .cover.post .lines h2 { font-size: 5.4cqw; }
+  .cover.post .lines .page { font-size: 2cqw; margin-left: 16cqw; }
+  .cover.post .lines .sub { font-size: 2.7cqw; }
+  .cover.post .art { height: 80cqh; }
+
+  /* ---------- small life for the reel ---------- */
+  .balloon { animation: bob 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+  @keyframes bob { 50% { transform: translate(-6px, -14px) rotate(-3deg); } }
+  .bat { animation: flap .45s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+  @keyframes flap { to { transform: scaleY(.35); } }
+  .flyA { animation: flyA 9s ease-in-out infinite; }
+  .flyB { animation: flyB 11s ease-in-out infinite; }
+  @keyframes flyA { 50% { transform: translate(-40px, 20px); } }
+  @keyframes flyB { 50% { transform: translate(30px, -25px); } }
+  .blink { animation: blink 5s steps(1) infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes blink { 96% { transform: scaleY(.1); } }
+  .glint { animation: glint 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes glint { 0%,70%,100% { opacity: 0; transform: scale(.4); } 80% { opacity: 1; transform: scale(1); } }
+  .fan { animation: fan 6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
+  @keyframes fan { 50% { transform: rotate(6deg); } }
+
+  .controls { display: flex; gap: 8px; }
+  .controls button { background: #222; color: #eee; border: 1px solid #444; border-radius: 6px;
+    padding: 6px 14px; font: 600 15px var(--sans); cursor: pointer; }
+  .controls button[aria-pressed="true"] { background: var(--red); border-color: #ff6a6a; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<main class="cover" id="cover" aria-label="Aloha Film Awards magazine-style poster">
+  <p class="price"><span class="dot"></span>13¢ &nbsp;Local Programs &nbsp;Nov. 13</p>
+
+  <div class="mast"><div class="big">ALOHA</div><div class="small">FILM AWARDS</div></div>
+
+  <div class="lines">
+    <h2>Jason takes his chances on Aloha’s student horror films</h2>
+    <p class="page">Page 13</p>
+    <p class="sub"><b>Friday the 13th</b> of November — a night of preliminary projects made in one month at Aloha College Marbella</p>
+  </div>
+
+  <!-- ===== illustration: brush-ink caricature with clean watercolour washes ===== -->
+  <svg class="art" viewBox="0 -70 1000 1470" aria-hidden="true">
+    <defs>
+      <!-- slight tremble so lines look hand-inked, not computer-perfect -->
+      <filter id="pen" x="-3%" y="-3%" width="106%" height="106%">
+        <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="7" result="w"/>
+        <feDisplacementMap in="SourceGraphic" in2="w" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <!-- watercolour: soft uneven tone inside a wash, paper showing through at the edges -->
+      <filter id="wash" x="-3%" y="-3%" width="106%" height="106%">
+        <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="2" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -.12 .05" result="lift"/>
+        <feComposite in="lift" in2="d" operator="in" result="l2"/>
+        <feMerge><feMergeNode in="d"/><feMergeNode in="l2"/></feMerge>
+      </filter>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="#111" stroke-width="1.5"/>
+      </pattern>
+      <pattern id="xhatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="#111" stroke-width="1.3"/>
+      </pattern>
+    </defs>
+
+    <!-- ================= 1. WATERCOLOUR WASHES (no outlines) ================= -->
+    <g filter="url(#wash)" stroke="none">
+      <!-- balloon -->
+      <g class="balloon">
+        <path d="M905,240 C975,240 1000,320 990,380 C978,450 935,505 905,520 C875,505 832,450 820,380 C810,320 835,240 905,240Z" fill="#d8262c"/>
+        <path d="M960,280 C990,330 985,420 930,490 C965,430 975,350 960,280Z" fill="#9b1218"/>
+      </g>
+
+      <!-- trophy: gold die on a pillar, black base -->
+      <path d="M118,1150 L402,1150 L412,1335 L108,1335Z" fill="#17171a"/>
+      <path d="M112,1186 L408,1186 L408,1210 L112,1210Z" fill="#f1c232"/>
+      <path d="M150,1105 L370,1105 L386,1152 L134,1152Z" fill="#f1c232"/>
+      <path d="M300,1108 L370,1105 L386,1152 L318,1152Z" fill="#cf7d14"/>
+      <path d="M228,800 L292,800 L305,1108 L215,1108Z" fill="#f3c63a"/>
+      <path d="M270,800 L292,800 L305,1108 L282,1108Z" fill="#d0811a"/>
+      <polygon points="260,575 360,628 260,682 160,628" fill="#fbe08a"/>
+      <polygon points="160,628 260,682 260,800 160,746" fill="#f0bd30"/>
+      <polygon points="260,682 360,628 360,746 260,800" fill="#cc7a14"/>
+      <polygon points="160,746 260,800 360,746 360,760 260,812 160,760" fill="#8a540c"/>
+
+      <!-- Jason: suit (black with a blue sheen), shirt, skin, mask -->
+      <path d="M505,770 L455,1040 L565,985Z M790,770 L835,1040 L725,985Z" fill="#141519"/>
+      <path d="M566,800 L622,800 L642,1050 L702,1232 L656,1242 L590,1060Z" fill="#141519"/>
+      <path d="M650,800 L708,800 L690,1050 L612,1232 L566,1226 L640,1040Z" fill="#191b21"/>
+      <path d="M500,425 C560,398 705,398 772,425 C822,447 832,525 818,605 L792,805 L705,822 L640,765 L578,822 L500,805 L480,605 C468,525 470,452 500,425Z" fill="#141519"/>
+      <path d="M505,432 C445,465 380,530 338,598 C326,628 352,656 386,646 L470,612 L548,580 L566,525 C552,485 532,450 505,432Z" fill="#141519"/>
+      <path d="M770,430 C822,452 852,540 852,640 C853,700 842,740 834,768 L790,762 C798,700 800,600 778,520Z" fill="#141519"/>
+      <path d="M598,415 L668,415 L660,650 L633,712 L606,650Z" fill="#ffffff"/>
+      <path d="M648,418 L668,415 L660,650 L640,700Z" fill="#c4cfe4"/>
+      <path d="M598,415 L555,565 L612,655Z M668,415 L712,565 L656,655Z" fill="#23262f"/>
+      <path d="M602,370 L665,370 L670,418 L598,418Z" fill="#a98f7f"/>
+      <!-- shoes -->
+      <path d="M548,1222 C505,1226 466,1252 476,1274 C520,1284 592,1282 628,1272 L624,1226Z" fill="#0e0e10"/>
+      <path d="M654,1234 C646,1266 668,1284 712,1284 L798,1280 C812,1254 772,1230 720,1228Z" fill="#0e0e10"/>
+      <!-- hands -->
+      <path d="M560,556 C584,540 618,548 622,574 C625,598 606,612 582,606 C566,600 556,576 560,556Z" fill="#c2ab98"/>
+      <path d="M790,790 C800,770 840,770 848,795 C855,820 830,840 805,832 C790,826 784,806 790,790Z" fill="#c2ab98"/>
+
+      <!-- Dracula -->
+      <path d="M-20,1345 C0,1230 30,1130 62,1100 L170,1100 C202,1130 232,1230 252,1345Z" fill="#131317"/>
+      <path d="M10,990 L52,1112 L180,1112 L222,990 L170,1078 L62,1078Z" fill="#c4202a"/>
+      <ellipse cx="116" cy="1040" rx="56" ry="70" fill="#d7e2cd"/>
+      <path d="M150,995 C168,1030 166,1080 138,1104 C120,1110 160,1050 150,995Z" fill="#a9bba0"/>
+      <path d="M150,1150 C175,1130 210,1140 212,1165 C214,1190 190,1200 165,1192Z" fill="#d7e2cd"/>
+
+      <!-- cat -->
+      <path d="M842,1334 C828,1252 858,1198 900,1198 C942,1198 966,1258 954,1334Z" fill="#141519"/>
+      <circle cx="900" cy="1168" r="40" fill="#141519"/>
+    </g>
+
+    <!-- head group (big caricature head) — washes -->
+    <g transform="translate(633 400) scale(1.3) translate(-633 -400)">
+      <g filter="url(#wash)" stroke="none">
+        <path d="M515,180 C510,62 752,52 760,172 C768,262 735,336 640,355 C555,345 518,272 515,180Z" fill="#b39784"/>
+        <path d="M712,95 C760,140 768,230 740,290 C720,320 690,340 660,350 C720,290 735,200 712,95Z" fill="#8a6f5e"/>
+        <path d="M543,150 C548,80 718,76 722,150 C738,242 716,345 632,398 C546,345 526,242 543,150Z" fill="#f6f1e4"/>
+        <path d="M690,110 C722,170 724,260 690,330 C670,365 650,385 632,398 C690,330 712,240 690,110Z" fill="#d9cdb3"/>
+      </g>
+    </g>
+
+    <!-- ================= 2. BLUE BRUSH HIGHLIGHTS on the black suit ================= -->
+    <g filter="url(#pen)" fill="none" stroke-linecap="round">
+      <g stroke="#3f63c0" stroke-width="9" opacity=".95">
+        <path d="M512,445 C492,480 484,545 490,612"/>
+        <path d="M498,450 C460,490 405,545 362,600"/>
+        <path d="M784,450 C818,500 834,580 832,668"/>
+        <path d="M575,812 L596,1050 L662,1230"/>
+        <path d="M660,812 L652,1040 L580,1222"/>
+        <path d="M508,790 L475,1010"/>
+        <path d="M560,575 C570,520 590,470 603,425"/>
+        <path d="M498,1265 C530,1270 570,1268 600,1262"/>
+        <path d="M676,1268 C720,1272 760,1270 785,1266"/>
+      </g>
+      <g stroke="#a9bde9" stroke-width="3.5">
+        <path d="M515,460 C500,500 494,550 497,600"/>
+        <path d="M584,830 L602,1040"/>
+        <path d="M788,470 C812,520 822,580 822,640"/>
+        <path d="M505,1262 L560,1264"/>
+        <path d="M690,1266 L745,1266"/>
+      </g>
+      <!-- white paper highlights left unpainted -->
+      <g stroke="#fff" stroke-width="6">
+        <path d="M850,300 C860,275 880,265 900,262"/>
+        <path d="M236,822 L246,1098"/>
+        <path d="M190,620 L250,592"/>
+        <path d="M168,650 L170,735"/>
+        <path d="M150,1120 L360,1120"/>
+      </g>
+    </g>
+
+    <!-- ================= 3. INK LINE WORK ================= -->
+    <g filter="url(#pen)" fill="none" stroke="#111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+
+      <!-- balloon -->
+      <path d="M905,520 C880,640 850,700 830,770" stroke-width="2.2"/>
+      <g class="balloon">
+        <path d="M905,240 C975,240 1000,320 990,380 C978,450 935,505 905,520 C875,505 832,450 820,380 C810,320 835,240 905,240Z"/>
+        <path d="M895,520 L915,520 L905,506Z" fill="#9b1218"/>
+        <text x="905" y="410" fill="#fff" stroke="none" font-family="Archivo Black, sans-serif" font-size="88" text-anchor="middle">13</text>
+      </g>
+
+      <!-- bats -->
+      <g class="flyA"><path class="bat" d="M720,60 C735,40 760,45 770,62 C780,48 795,48 800,60 C808,48 822,48 830,62 C840,45 865,40 880,60 C860,62 845,75 840,90 C825,78 815,80 800,95 C785,80 775,78 760,90 C755,75 740,62 720,60Z" fill="#111" stroke-width="2"/></g>
+      <g class="flyB"><path class="bat" d="M560,10 C570,-2 588,2 594,12 C600,3 610,3 614,12 C620,3 630,3 634,12 C640,2 658,-2 668,10 C654,12 644,20 640,30 C630,22 624,24 614,34 C604,24 598,22 588,30 C584,20 574,12 560,10Z" fill="#111" stroke-width="2"/></g>
+
+      <!-- trophy -->
+      <path d="M118,1150 L402,1150 L412,1335 L108,1335Z"/>
+      <path d="M112,1186 L408,1186 M112,1210 L408,1210" stroke-width="3"/>
+      <path d="M150,1105 L370,1105 L386,1152 L134,1152Z"/>
+      <path d="M228,800 L292,800 L305,1105 M215,1105 L228,800" />
+      <path d="M284,830 L294,1090 M292,880 L298,880 M292,940 L300,940 M293,1000 L301,1000 M294,1060 L302,1060" stroke-width="2"/>
+      <polygon points="260,575 360,628 260,682 160,628"/>
+      <path d="M160,628 L160,746 L260,800 L360,746 L360,628 M260,682 L260,800"/>
+      <path d="M160,746 L160,760 L260,812 L360,760 L360,746" stroke-width="3"/>
+      <g fill="#111" stroke="none">
+        <ellipse cx="260" cy="628" rx="16" ry="9"/>
+        <ellipse cx="183" cy="660" rx="9" ry="12"/><ellipse cx="210" cy="714" rx="9" ry="12"/><ellipse cx="237" cy="768" rx="9" ry="12"/>
+        <ellipse cx="283" cy="690" rx="8" ry="11"/><ellipse cx="283" cy="725" rx="8" ry="11"/><ellipse cx="283" cy="760" rx="8" ry="11"/>
+        <ellipse cx="336" cy="663" rx="8" ry="11"/><ellipse cx="336" cy="698" rx="8" ry="11"/><ellipse cx="336" cy="733" rx="8" ry="11"/>
+      </g>
+      <path d="M300,700 L350,676 M300,720 L350,696 M305,742 L350,718" stroke-width="1.6"/>
+      <rect x="180" y="1240" width="160" height="56" rx="6" fill="#f1c232" stroke-width="3"/>
+      <text x="260" y="1279" stroke="none" fill="#3a2506" font-family="Archivo Black, sans-serif" font-size="30" text-anchor="middle">FRI · 13</text>
+      <path class="glint" d="M196,612 l7,-20 l7,20 l20,7 l-20,7 l-7,20 l-7,-20 l-20,-7Z" fill="#fff" stroke-width="1.5"/>
+
+      <!-- Jason body -->
+      <path d="M505,770 L455,1040 L565,985 M790,770 L835,1040 L725,985"/>
+      <path d="M566,800 L590,1060 L656,1242 M622,800 L642,1050 L702,1232"/>
+      <path d="M650,800 L640,1040 L566,1226 M708,800 L690,1050 L612,1232"/>
+      <path d="M548,1222 C505,1226 466,1252 476,1274 C520,1284 592,1282 628,1272 L624,1226" stroke-width="5.5"/>
+      <path d="M654,1234 C646,1266 668,1284 712,1284 L798,1280 C812,1254 772,1230 720,1228" stroke-width="5.5"/>
+      <path d="M500,425 C560,398 705,398 772,425 C822,447 832,525 818,605 L792,805 L705,822 L640,765 L578,822 L500,805 L480,605 C468,525 470,452 500,425Z" stroke-width="5.5"/>
+      <path d="M598,415 L668,415 L660,650 L633,712 L606,650Z"/>
+      <path d="M598,415 L555,565 L612,655 M668,415 L712,565 L656,655" stroke-width="3.5"/>
+      <g fill="#111" stroke="none"><circle cx="633" cy="520" r="6"/><circle cx="633" cy="562" r="6"/><circle cx="633" cy="604" r="6"/></g>
+      <path d="M645,440 L652,640" stroke-width="1.4"/>
+      <path d="M638,470 L646,470 M638,500 L648,500 M640,540 L648,540 M640,585 L650,585 M640,625 L650,625" stroke-width="1.4"/>
+      <!-- collar + bow tie -->
+      <path d="M602,370 L598,418 M665,370 L670,418"/>
+      <path d="M633,428 L590,405 L588,452Z M633,428 L676,405 L678,452Z" fill="#fff"/>
+      <ellipse cx="633" cy="428" rx="12" ry="14" fill="#fff"/>
+      <path d="M598,420 L590,436 M672,420 L680,436" stroke-width="2"/>
+      <!-- left arm resting on the die, limp hand with long fingers -->
+      <path d="M505,432 C445,465 380,530 338,598 C326,628 352,656 386,646 L470,612 L548,580 L566,525 C552,485 532,450 505,432Z" stroke-width="5.5"/>
+      <path d="M380,610 C400,615 420,605 440,598" stroke-width="2.5"/>
+      <path d="M528,575 L566,558 L575,592 L534,610Z" fill="#fff"/>
+      <path d="M560,556 C584,540 618,548 622,574 C625,598 606,612 582,606 C566,600 556,576 560,556Z"/>
+      <path d="M582,606 C584,630 586,650 588,662 M596,608 C600,632 604,652 606,664 M608,604 C614,624 618,642 620,652 M617,594 C626,610 630,624 632,632" stroke-width="4"/>
+      <path d="M590,575 C600,572 610,578 612,586" stroke-width="2"/>
+      <!-- right arm + card fan -->
+      <path d="M770,430 C822,452 852,540 852,640 C853,700 842,740 834,768 L790,762 C798,700 800,600 778,520" stroke-width="5.5"/>
+      <path d="M788,760 L838,766 L836,790 L786,784Z" fill="#fff"/>
+      <g class="fan">
+        <g transform="rotate(-24 815 860)"><rect x="780" y="735" width="70" height="100" rx="8" fill="#fff" stroke-width="3"/><text x="790" y="770" font-size="28" font-family="Archivo Black, sans-serif" fill="#111" stroke="none">A♠</text></g>
+        <g transform="rotate(0 815 860)"><rect x="780" y="730" width="70" height="100" rx="8" fill="#fff" stroke-width="3"/><text x="790" y="765" font-size="28" font-family="Archivo Black, sans-serif" fill="#d42027" stroke="none">K♥</text></g>
+        <g transform="rotate(24 815 860)"><rect x="780" y="735" width="70" height="100" rx="8" fill="#fff" stroke-width="3"/><text x="790" y="770" font-size="28" font-family="Archivo Black, sans-serif" fill="#111" stroke="none">K♠</text></g>
+      </g>
+      <path d="M790,790 C800,770 840,770 848,795 C855,820 830,840 805,832 C790,826 784,806 790,790Z" fill="#c2ab98"/>
+      <path d="M796,800 L842,800 M796,814 L840,814" stroke-width="2"/>
+
+      <!-- Dracula -->
+      <path d="M-20,1345 C0,1230 30,1130 62,1100 L170,1100 C202,1130 232,1230 252,1345"/>
+      <path d="M60,1130 C45,1210 40,1280 35,1330 M116,1120 L116,1330 M172,1130 C188,1210 195,1280 200,1330" stroke="#3f63c0" stroke-width="6"/>
+      <path d="M10,990 L52,1112 L180,1112 L222,990 L170,1078 L62,1078Z"/>
+      <ellipse cx="116" cy="1040" rx="56" ry="70"/>
+      <path d="M58,1028 C52,968 180,962 174,1028 L148,1006 L116,1046 L84,1006Z" fill="#111"/>
+      <path d="M80,1030 L104,1040 M152,1030 L128,1040" stroke-width="6"/>
+      <circle cx="94" cy="1052" r="7" fill="#d42027" stroke-width="2.5"/><circle cx="138" cy="1052" r="7" fill="#d42027" stroke-width="2.5"/>
+      <path d="M112,1058 C108,1070 110,1076 118,1076" stroke-width="3"/>
+      <path d="M90,1086 C105,1096 128,1096 142,1086" stroke-width="4"/>
+      <path d="M100,1089 L104,1104 L109,1091Z M124,1091 L128,1104 L132,1089Z" fill="#fff" stroke-width="2.5"/>
+      <path d="M150,1150 C175,1130 210,1140 212,1165 C214,1190 190,1200 165,1192Z"/>
+      <g transform="rotate(-14 196 1138)"><rect x="168" y="1110" width="56" height="56" rx="9" fill="#fff"/><circle cx="196" cy="1138" r="8" fill="#d42027" stroke="none"/></g>
+
+      <!-- black cat -->
+      <path d="M950,1320 C1010,1300 1000,1225 965,1215" stroke-width="16"/>
+      <path d="M842,1334 C828,1252 858,1198 900,1198 C942,1198 966,1258 954,1334Z"/>
+      <circle cx="900" cy="1168" r="40"/>
+      <path d="M866,1150 L866,1104 L896,1134Z M934,1150 L934,1104 L904,1134Z" fill="#141519"/>
+      <path d="M856,1250 C852,1280 852,1310 856,1330 M870,1215 C860,1240 858,1270 860,1300" stroke="#3f63c0" stroke-width="5"/>
+      <g class="blink">
+        <path d="M876,1166 C882,1154 896,1156 898,1168 C892,1176 880,1176 876,1166Z" fill="#f6d33c" stroke-width="1.5"/>
+        <path d="M902,1168 C904,1156 918,1154 924,1166 C920,1176 908,1176 902,1168Z" fill="#f6d33c" stroke-width="1.5"/>
+        <path d="M887,1158 L887,1176 M913,1158 L913,1176" stroke-width="3"/>
+      </g>
+      <path d="M870,1185 L836,1180 M870,1190 L840,1196 M930,1185 L964,1180 M930,1190 L960,1196" stroke-width="1.4"/>
+
+      <!-- floor: a few quick pen strokes instead of a shadow -->
+      <path d="M440,1290 L540,1292 M610,1292 L680,1292 M760,1292 L830,1294" stroke-width="2"/>
+      <path d="M470,1300 L600,1300 M640,1300 L800,1302" stroke-width="1.4"/>
+    </g>
+
+    <!-- shadows: pen hatching -->
+    <g filter="url(#pen)" stroke="none">
+      <path d="M318,1152 L386,1152 L370,1105 L300,1108Z" fill="url(#hatch)"/>
+      <path d="M332,1215 L408,1215 L412,1335 L340,1335Z" fill="url(#xhatch)" opacity=".5"/>
+      <path d="M440,1305 L820,1305 L810,1320 L460,1318Z" fill="url(#hatch)" opacity=".6"/>
+      <path d="M150,1150 C175,1170 200,1180 212,1165 C210,1190 190,1200 165,1192Z" fill="url(#hatch)"/>
+    </g>
+
+    <!-- head group (big caricature head) — ink -->
+    <g transform="translate(633 400) scale(1.3) translate(-633 -400)" filter="url(#pen)" fill="none" stroke="#111" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M515,180 C510,62 752,52 760,172 C768,262 735,336 640,355 C555,345 518,272 515,180Z"/>
+      <path d="M716,100 C752,140 760,210 745,265 C736,295 712,320 690,334" fill="url(#hatch)" stroke="none"/>
+      <path d="M528,120 C540,110 556,104 566,104 M736,118 C748,128 754,140 756,150" stroke-width="2"/>
+      <!-- straps -->
+      <path d="M546,168 L516,160 M722,166 L758,156 M552,300 L528,286 M712,298 L740,284" stroke-width="7"/>
+      <!-- mask -->
+      <path d="M543,150 C548,80 718,76 722,150 C738,242 716,345 632,398 C546,345 526,242 543,150Z" stroke-width="4.8"/>
+      <path d="M700,150 C712,240 698,320 645,382 L660,368 C705,320 718,240 700,150Z" fill="url(#hatch)" stroke="none"/>
+      <path d="M596,118 L632,166 L668,118" stroke="#d42027" stroke-width="13"/>
+      <path d="M566,248 L586,284 L606,248" stroke="#d42027" stroke-width="10"/>
+      <path d="M660,248 L680,284 L700,248" stroke="#d42027" stroke-width="10"/>
+      <path d="M568,205 C580,186 614,188 622,208 C610,224 578,224 568,205Z" fill="#111"/>
+      <path d="M644,208 C652,188 686,186 698,205 C688,224 656,224 644,208Z" fill="#111"/>
+      <g class="blink"><circle cx="600" cy="207" r="5.5" fill="#f3efe2" stroke="none"/><circle cx="668" cy="207" r="5.5" fill="#f3efe2" stroke="none"/></g>
+      <g fill="#111" stroke="none">
+        <circle cx="580" cy="160" r="4.5"/><circle cx="686" cy="160" r="4.5"/>
+        <circle cx="622" cy="240" r="4.5"/><circle cx="644" cy="240" r="4.5"/>
+        <circle cx="612" cy="264" r="4.5"/><circle cx="633" cy="264" r="4.5"/><circle cx="654" cy="264" r="4.5"/>
+        <circle cx="600" cy="292" r="4.5"/><circle cx="622" cy="292" r="4.5"/><circle cx="644" cy="292" r="4.5"/><circle cx="666" cy="292" r="4.5"/>
+        <circle cx="612" cy="318" r="4.5"/><circle cx="633" cy="318" r="4.5"/><circle cx="654" cy="318" r="4.5"/>
+        <circle cx="622" cy="344" r="4.5"/><circle cx="644" cy="344" r="4.5"/>
+      </g>
+      <path d="M560,140 C562,180 560,230 572,280" stroke-width="1.6"/>
+    </g>
+
+    <!-- artist's signature, the way the old covers were signed by the feet -->
+    <text x="430" y="1250" transform="rotate(-10 430 1250)" font-family="Caveat, cursive" font-size="44" fill="#111">Aloha ’26</text>
+  </svg>
+</main>
+
+<div class="controls">
+  <button id="reel" aria-pressed="true">Reel 9:16</button>
+  <button id="post" aria-pressed="false">Post 4:5</button>
+</div>
+
+<script>
+  // Reel / post format switch
+  const cover = document.getElementById('cover');
+  const reelBtn = document.getElementById('reel'), postBtn = document.getElementById('post');
+  function setFormat(post) {
+    cover.classList.toggle('post', post);
+    reelBtn.setAttribute('aria-pressed', !post);
+    postBtn.setAttribute('aria-pressed', post);
+  }
+  reelBtn.onclick = () => setFormat(false);
+  postBtn.onclick = () => setFormat(true);
+</script>
+</body>
+</html>
