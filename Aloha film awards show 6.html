@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aloha Film Awards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Creepster&family=Oswald:wght@400;600;700&family=Libre+Baskerville:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive-dk: #1f2810;
+    --olive: #4a5d22;
+    --green: #6e8a2c;
+    --lime: #b9c96a;
+    --yellow: #ffe14a;
+    --orange: #f7931e;
+    --red: #d7261e;
+    --brown: #3a1c06;
+    --cream: #f4ecd2;
+    --swirl: 'Shrikhand', 'Cooper Black', serif;
+    --cond: 'Oswald', 'Arial Narrow', sans-serif;
+    --serif: 'Libre Baskerville', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #111; display: grid; place-items: center; grid-template-rows: 1fr auto;
+    gap: 14px; padding: 2vh 16px; font-family: var(--cond); }
+
+  /* ---------- the cover ---------- */
+  .cover {
+    position: relative; overflow: hidden; container-type: size;
+    aspect-ratio: 9 / 16; height: min(88vh, calc((100vw - 32px) * 16 / 9));
+    background:
+      radial-gradient(70% 45% at 30% 30%, #6b7a3a, transparent 70%),
+      radial-gradient(90% 60% at 50% 100%, #3b4a1a, transparent 70%),
+      linear-gradient(180deg, #3d4a20, var(--olive-dk));
+    color: var(--cream); box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  }
+  .cover.post { aspect-ratio: 4 / 5; height: min(88vh, calc((100vw - 32px) * 5 / 4)); }
+
+  /* worn print texture */
+  .cover::after { content: ''; position: absolute; inset: 0; z-index: 30; pointer-events: none; mix-blend-mode: overlay; opacity: .35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .cover::before { content: ''; position: absolute; inset: 0; z-index: 29; pointer-events: none; box-shadow: inset 0 0 14cqw rgba(10,14,4,.75); }
+
+  .bar { position: absolute; top: 0; left: 0; right: 0; height: 4.6cqh; z-index: 10; background: #0b0b08;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 4cqw;
+    font: 600 3cqw/1 var(--cond); letter-spacing: .14em; text-transform: uppercase; }
+  .bar b { font: 700 3.4cqw var(--cond); letter-spacing: .02em; text-transform: none; color: var(--lime); }
+
+
+  /* the big green spot behind the title */
+  .spot { position: absolute; z-index: 3; left: -12cqw; top: 42cqh; width: 104cqw; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle at 42% 38%, #9fb54c, var(--green) 45%, #3c5216 80%, #2a3b0e);
+    box-shadow: 0 0 6cqw rgba(0,0,0,.45), inset 0 -3cqw 6cqw rgba(0,0,0,.35); }
+
+  /* black silhouette of Jason, like the dancing figure */
+  .shadow { position: absolute; z-index: 4; right: -9cqw; bottom: 3cqh; height: 70cqh;
+    transform-origin: 50% 100%; }
+
+  /* swirly 70s title */
+  .title { position: absolute; z-index: 6; left: 2cqw; top: 52cqh; width: 76cqw; text-align: center;
+    font-family: var(--swirl); line-height: .82; transform: rotate(-4deg); }
+  .title span { display: block;
+    background: linear-gradient(180deg, var(--yellow) 25%, var(--orange) 55%, var(--red) 92%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-text-stroke: .35cqw var(--brown);
+    filter: drop-shadow(.5cqw .7cqw 0 var(--brown)) drop-shadow(0 0 2cqw rgba(0,0,0,.35)); }
+  .title .t1 { font-size: 21cqw; }
+  .title .t2 { font-size: 9cqw; margin: 1cqw 0 0 -18cqw; }
+  .title .t3 { font-size: 18cqw; }
+  .title .swash { display: block; width: 70%; height: 4cqw; margin: 1.5cqw auto 0;
+    border-bottom: 1.4cqw solid var(--orange); border-radius: 0 0 50% 50%;
+    filter: drop-shadow(.4cqw .5cqw 0 var(--brown)); }
+  .tagline { position: absolute; z-index: 6; left: 3cqw; top: 83cqh; width: 52cqw; text-align: center;
+    font: italic 700 3.9cqw/1.2 var(--serif); color: var(--cream); text-shadow: 0 .3cqw 0 rgba(0,0,0,.6); transform: rotate(-4deg); }
+
+  .tagline .dare { display: inline-block; font: 400 2.3em/1 'Creepster', var(--swirl); color: var(--red); letter-spacing: .03em;
+    vertical-align: -.15em; text-shadow: 0 0 1.2cqw rgba(0,0,0,.8), .3cqw .4cqw 0 #2a0402; }
+  .anim .tagline .dare { animation: throb 2.4s ease-in-out 3.2s infinite; }
+  @keyframes throb { 50% { transform: scale(1.08) rotate(-3deg); text-shadow: 0 0 2.6cqw rgba(215,38,30,.75), .3cqw .4cqw 0 #2a0402; } }
+
+  /* top-left quote-style line */
+  .quote { position: absolute; z-index: 7; left: 5cqw; top: 6.5cqh; font: italic 700 4.6cqw/1.1 var(--serif);
+    color: #fff; text-shadow: 0 .3cqw .8cqw rgba(0,0,0,.7); }
+  .quote small { display: block; font: 600 2.8cqw var(--cond); letter-spacing: .1em; text-transform: uppercase; margin-top: .8cqh; color: var(--yellow); font-style: normal; text-shadow: 0 .2cqw .6cqw #000; }
+
+  /* round badge: the date */
+  .badge { position: absolute; z-index: 7; right: 5cqw; top: 7cqh; width: 20cqw; aspect-ratio: 1; border-radius: 50%;
+    background: var(--red); color: #fff; display: grid; place-items: center; text-align: center;
+    border: .6cqw solid #fff; box-shadow: 0 1cqw 2cqw rgba(0,0,0,.5); transform: rotate(10deg); }
+  .badge div { font: 700 3cqw/1 var(--cond); letter-spacing: .08em; text-transform: uppercase; }
+  .badge b { display: block; font: 400 9.5cqw/.9 var(--swirl); }
+
+  /* vertical strap along the right edge */
+  .strap { position: absolute; z-index: 7; right: 1.6cqw; top: 30cqh; writing-mode: vertical-rl;
+    font: 600 2.6cqw var(--cond); letter-spacing: .16em; text-transform: uppercase; color: var(--cream); opacity: .9; }
+
+  /* bottom: venue + "13" rating-style roundel */
+  .foot { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; height: 7cqh; background: linear-gradient(transparent, rgba(8,10,4,.9) 45%);
+    display: flex; align-items: flex-end; justify-content: space-between; padding: 0 4cqw 2cqh; gap: 3cqw; }
+  .foot .num { flex: none; width: 8.5cqw; aspect-ratio: 1; border-radius: 50%; background: var(--red); border: .5cqw solid #fff;
+    display: grid; place-items: center; font: 700 4.2cqw/1 var(--cond); color: #fff; }
+  .foot p { font: 600 3cqw/1.25 var(--cond); letter-spacing: .06em; text-transform: uppercase; text-align: right; }
+  .foot p span { color: var(--yellow); }
+
+  .cover.post .spot { width: 74cqw; left: 2cqw; top: 34cqh; }
+  .cover.post .shadow { height: 86cqh; right: -4cqw; bottom: 2cqh; }
+  .cover.post .title { left: 6cqw; top: 44cqh; width: 60cqw; }
+  .cover.post .title .t1 { font-size: 16cqw; } .cover.post .title .t2 { font-size: 7cqw; margin-left: -14cqw; } .cover.post .title .t3 { font-size: 13.5cqw; }
+  .cover.post .tagline { top: 78cqh; left: 4cqw; width: 44cqw; font-size: 3.2cqw; }
+  .cover.post .badge { width: 15cqw; } .cover.post .badge b { font-size: 7cqw; } .cover.post .badge div { font-size: 2.4cqw; }
+  .cover.post .strap { display: none; }
+  .cover.post .foot { height: 9cqh; }
+  .cover.post .bar { height: 5.5cqh; }
+
+  /* ---------- reel motion ---------- */
+  .anim .spot { animation: grow 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
+  .anim .shadow { animation: slidein 1.2s cubic-bezier(.2,.8,.2,1) .6s both, sway 5s ease-in-out 1.8s infinite; }
+  .anim .title span { animation: pop .7s cubic-bezier(.2,.9,.3,1.4) both; }
+  .anim .title .t1 { animation-delay: 1.1s; } .anim .title .t2 { animation-delay: 1.35s; } .anim .title .t3 { animation-delay: 1.6s; }
+  .anim .title .swash { animation: fadein .6s 1.9s both; }
+  .anim .tagline { animation: fadein .9s 2.2s both; }
+  .anim .badge { animation: spinin .9s cubic-bezier(.2,.9,.3,1.3) 2.5s both; }
+  .anim .quote { animation: fadein .8s 2.8s both; }
+  @keyframes grow { from { transform: scale(0); } }
+  @keyframes fadein { from { opacity: 0; } }
+  @keyframes slidein { from { opacity: 0; transform: translateX(20cqw); } }
+  @keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+  @keyframes pop { from { opacity: 0; transform: scale(.4) rotate(-10deg); } }
+  @keyframes spinin { from { opacity: 0; transform: rotate(-200deg) scale(.3); } }
+
+  .controls { display: flex; gap: 8px; }
+  .controls button { background: #222; color: #eee; border: 1px solid #444; border-radius: 6px;
+    padding: 6px 14px; font: 600 15px var(--cond); letter-spacing: .04em; cursor: pointer; }
+  .controls button[aria-pressed="true"] { background: var(--green); border-color: var(--lime); }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+</head>
+<body>
+
+
+<main class="cover anim" id="cover" aria-label="Aloha Film Awards poster">
+  <div class="bar"><b>Aloha College Marbella</b><span>Student Film Showcase</span></div>
+
+  <div class="spot" aria-hidden="true"></div>
+  <img class="shadow" src="aloha_awards/jason_cutout.png" alt="Jason Voorhees in a tuxedo with a cane and a martini">
+
+  <p class="quote">★★★★ “Feeling lucky?”<small>Take your chances</small></p>
+  <div class="badge"><div>Friday<b>13</b>Nov</div></div>
+  <p class="strap">Preliminary projects · made in one month</p>
+
+  <h1 class="title" aria-label="Aloha Film Awards">
+    <span class="t1">Aloha</span><span class="t2">film</span><span class="t3">Awards</span><i class="swash"></i>
+  </h1>
+  <p class="tagline">Come and watch what our students have to impress you with, if you <span class="dare">dare</span></p>
+
+  <div class="foot">
+    <span class="num">13</span>
+    <p>Friday <span>13 November</span><br>A night of student preliminary projects</p>
+  </div>
+</main>
+
+<div class="controls">
+  <button id="reel" aria-pressed="true">Reel 9:16</button>
+  <button id="post" aria-pressed="false">Post 4:5</button>
+  <button id="replay">↻ Replay intro</button>
+</div>
+
+<script>
+  const cover = document.getElementById('cover');
+  const reelBtn = document.getElementById('reel'), postBtn = document.getElementById('post');
+  function setFormat(post) {
+    cover.classList.toggle('post', post);
+    reelBtn.setAttribute('aria-pressed', !post);
+    postBtn.setAttribute('aria-pressed', post);
+  }
+  reelBtn.onclick = () => setFormat(false);
+  postBtn.onclick = () => setFormat(true);
+
+  // restart the build-up animation (handy when screen-recording the reel)
+  document.getElementById('replay').onclick = () => {
+    cover.classList.remove('anim'); void cover.offsetWidth; cover.classList.add('anim');
+  };
+</script>
+</body>
+</html>

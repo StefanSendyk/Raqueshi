@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aloha Film Awards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fcfbf7;   /* same off-white as the painting, so it blends in */
+    --ink: #111;
+    --red: #d42027;
+    --sans: 'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif;
+    --logo: 'Archivo Black', 'Arial Black', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #1a1a1a; display: grid; place-items: center; grid-template-rows: 1fr auto;
+    gap: 14px; padding: 2vh 16px; font-family: var(--sans); }
+
+  /* ---------- the magazine cover ---------- */
+  .cover {
+    position: relative; overflow: hidden; container-type: size;
+    aspect-ratio: 9 / 16; height: min(88vh, calc((100vw - 32px) * 16 / 9));
+    background: var(--paper); color: var(--ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  }
+  .cover.post { aspect-ratio: 4 / 5; height: min(88vh, calc((100vw - 32px) * 5 / 4)); }
+
+  .price { position: absolute; top: 2.6cqh; left: 5cqw; z-index: 5;
+    font: 500 3.5cqw/1 var(--sans); letter-spacing: -.01em; }
+  .price .dot { display: inline-block; width: .8em; height: .8em; border: .12em solid var(--ink); border-radius: 50%;
+    vertical-align: -.05em; margin-right: .25em; position: relative; }
+  .price .dot::after { content: ''; position: absolute; inset: .14em; border-radius: 50%; background: var(--ink); }
+
+  .mast { position: absolute; top: 5cqh; left: 5cqw; z-index: 5; width: max-content;
+    background: var(--red); color: #fff; border-radius: 3.2cqw; padding: 1.6cqw 3.4cqw 2.4cqw; text-align: center; }
+  .mast .big { font: 400 13.5cqw/.9 var(--logo); letter-spacing: -.035em; }
+  .mast .small { font: 400 5.9cqw/1 var(--logo); letter-spacing: .03em; margin-top: .4cqw; }
+
+  .lines { position: absolute; left: 5cqw; top: 22cqh; z-index: 5; width: 36cqw; }
+  .lines h2 { font: 500 6.2cqw/1.04 var(--sans); letter-spacing: -.025em; }
+  .lines .page { font: 500 2.5cqw/1 var(--sans); margin: .8cqh 0 0 20cqw; }
+
+  /* the painting: bottom-right, like the figure on the old covers */
+  .jason { position: absolute; right: -4cqw; bottom: 0; height: 72cqh; z-index: 3;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 3.5%); mask-image: linear-gradient(180deg, transparent 0, #000 3.5%); }
+
+  /* event details tucked bottom-left, beside the cane */
+  .when { position: absolute; left: 5cqw; bottom: 4cqh; z-index: 5; width: 25cqw; }
+  .when .day { font: 400 6.4cqw/.95 var(--logo); letter-spacing: -.02em; }
+  .when .day em { font-style: normal; color: var(--red); }
+  .when p { font: 500 2.9cqw/1.22 var(--sans); margin-top: 1.2cqh; }
+  .when .luck { font-weight: 700; color: var(--red); }
+
+  .cover.post .mast { top: 6.8cqh; }
+  .cover.post .mast .big { font-size: 11cqw; }
+  .cover.post .mast .small { font-size: 4.8cqw; }
+  .cover.post .lines { top: 27cqh; width: 36cqw; }
+  .cover.post .lines h2 { font-size: 5cqw; }
+  .cover.post .lines .page { font-size: 2cqw; margin-left: 16cqw; }
+  .cover.post .jason { height: 84cqh; right: -2cqw; }
+  .cover.post .when { width: 30cqw; bottom: 4cqh; }
+  .cover.post .when .day { font-size: 5.6cqw; }
+  .cover.post .when p { font-size: 2.5cqw; }
+
+  /* ---------- reel intro: the cover builds itself, then Jason idles ---------- */
+  .anim .mast  { animation: drop .8s cubic-bezier(.2,.9,.3,1.2) .1s both; }
+  .anim .price { animation: fade .6s .5s both; }
+  .anim .jason { animation: rise 1.4s cubic-bezier(.2,.8,.2,1) .4s both, idle 6s ease-in-out 2s infinite; transform-origin: 50% 100%; }
+  .anim .lines h2 { animation: fade .9s 1.2s both; }
+  .anim .lines .page { animation: fade .6s 1.7s both; }
+  .anim .when > * { animation: fade .7s both; }
+  .anim .when > :nth-child(1) { animation-delay: 2s; }
+  .anim .when > :nth-child(2) { animation-delay: 2.3s; }
+  .anim .when > :nth-child(3) { animation-delay: 2.5s; }
+  .anim .when > :nth-child(4) { animation-delay: 3.1s; }
+  @keyframes drop { from { opacity: 0; transform: translateY(-40%) scale(.9); } }
+  @keyframes fade { from { opacity: 0; transform: translateY(1.2cqh); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(4cqh); } }
+  @keyframes idle { 50% { transform: rotate(-.6deg) scale(1.006); } }
+
+  .controls { display: flex; gap: 8px; }
+  .controls button { background: #222; color: #eee; border: 1px solid #444; border-radius: 6px;
+    padding: 6px 14px; font: 600 15px var(--sans); cursor: pointer; }
+  .controls button[aria-pressed="true"] { background: var(--red); border-color: #ff6a6a; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<main class="cover anim" id="cover" aria-label="Aloha Film Awards magazine-style poster">
+  <p class="price"><span class="dot"></span>13¢ &nbsp;Local Programs &nbsp;Nov. 13</p>
+
+  <div class="mast"><div class="big">ALOHA</div><div class="small">FILM AWARDS</div></div>
+
+  <div class="lines">
+    <h2>Jason takes his chances on Aloha’s student horror films</h2>
+    <p class="page">Page 13</p>
+  </div>
+
+  <img class="jason" src="aloha_awards/jason_tux.jpg" alt="Watercolour caricature of Jason Voorhees in a tuxedo, leaning on a cane and raising a martini">
+
+  <div class="when">
+    <div class="day">Friday<br>the <em>13th</em></div>
+    <p>of November at Aloha College Marbella</p>
+    <p>A night of preliminary projects made by our students in one month</p>
+    <p class="luck">Feeling lucky?</p>
+  </div>
+</main>
+
+<div class="controls">
+  <button id="reel" aria-pressed="true">Reel 9:16</button>
+  <button id="post" aria-pressed="false">Post 4:5</button>
+  <button id="replay">↻ Replay intro</button>
+</div>
+
+<script>
+  const cover = document.getElementById('cover');
+  const reelBtn = document.getElementById('reel'), postBtn = document.getElementById('post');
+  function setFormat(post) {
+    cover.classList.toggle('post', post);
+    reelBtn.setAttribute('aria-pressed', !post);
+    postBtn.setAttribute('aria-pressed', post);
+  }
+  reelBtn.onclick = () => setFormat(false);
+  postBtn.onclick = () => setFormat(true);
+
+  // restart the build-up animation (handy when screen-recording the reel)
+  document.getElementById('replay').onclick = () => {
+    cover.classList.remove('anim'); void cover.offsetWidth; cover.classList.add('anim');
+  };
+</script>
+</body>
+</html>

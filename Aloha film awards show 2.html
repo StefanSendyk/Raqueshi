@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aloha Film Awards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4eedf;
+    --ink: #1b1410;
+    --red: #d1202a;
+    --gold: #e9b53c;
+    --sans: 'Archivo', Helvetica, Arial, sans-serif;
+    --black: 'Archivo Black', 'Arial Black', sans-serif;
+    --hand: 'Caveat', cursive;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { background: #111; display: grid; place-items: center; grid-template-rows: 1fr auto;
+    gap: 14px; padding: 2vh 16px; font-family: var(--sans); }
+
+  /* ---------- the magazine cover ---------- */
+  .cover {
+    position: relative; overflow: hidden; container-type: size;
+    aspect-ratio: 9 / 16; height: min(88vh, calc((100vw - 32px) * 16 / 9));
+    background: var(--paper); color: var(--ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  }
+  .cover.post { aspect-ratio: 4 / 5; height: min(88vh, calc((100vw - 32px) * 5 / 4)); }
+
+  /* old paper: speckle + yellowed edges */
+  .cover::before { content: ''; position: absolute; inset: 0; z-index: 30; pointer-events: none; mix-blend-mode: multiply; opacity: .35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .9 -.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .cover::after { content: ''; position: absolute; inset: 0; z-index: 31; pointer-events: none;
+    box-shadow: inset 0 0 9cqw rgba(150,110,40,.28); }
+
+  .price { position: absolute; top: 3cqh; left: 6cqw; z-index: 5;
+    font: 700 3.6cqw/1 var(--sans); letter-spacing: .01em; }
+  .price b { font-weight: 800; }
+
+  .mast { position: absolute; top: 5.6cqh; left: 6cqw; z-index: 5; width: max-content;
+    background: var(--red); color: #fff; border-radius: 3cqw; padding: 2.4cqw 3cqw 2.2cqw;
+    text-align: center; box-shadow: inset 0 0 0 .5cqw rgba(255,255,255,.12); }
+  .mast .big { font: 400 12.4cqw/.82 var(--black); letter-spacing: -.03em; }
+  .mast .small { font: 800 6.6cqw/1 var(--sans); letter-spacing: .02em; margin-top: 1cqw; }
+
+  .lines { position: absolute; left: 6cqw; top: 23.5cqh; z-index: 5; width: 45cqw; }
+  .lines h2 { font: 700 6.3cqw/1.04 var(--sans); letter-spacing: -.015em; }
+  .lines h2 em { font-style: normal; color: var(--red); }
+  .lines .page { font: 700 2.8cqw/1 var(--sans); margin-top: 1cqh; }
+
+  .burst { position: absolute; z-index: 6; top: 4cqh; right: 4cqw; width: 27cqw; aspect-ratio: 1;
+    display: grid; place-items: center; text-align: center; color: var(--ink);
+    font: 400 4cqw/1 var(--black); transform: rotate(12deg); animation: wobble 4s ease-in-out infinite; }
+  .burst svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .burst span { position: relative; }
+  .burst small { display: block; font: 700 6cqw/1 var(--hand); color: var(--red); }
+  @keyframes wobble { 50% { transform: rotate(4deg) scale(1.04); } }
+
+  .art { position: absolute; right: 0; bottom: 11.5cqh; height: 77cqh; z-index: 4; }
+
+  .strip { position: absolute; left: 0; right: 0; bottom: 0; height: 11.5cqh; z-index: 7;
+    background: var(--ink); color: var(--paper);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .7cqh; text-align: center; }
+  .strip .when { font: 400 4.6cqw/1.1 var(--black); letter-spacing: .01em; }
+  .strip .when em { font-style: normal; color: var(--red); }
+  .strip .what { font: 500 2.9cqw/1.25 var(--sans); opacity: .85; padding: 0 5cqw; }
+  .sig { position: absolute; z-index: 8; left: 50cqw; bottom: 12.5cqh; font: 700 5cqw/1 var(--hand);
+    transform: rotate(-8deg); color: var(--ink); opacity: .8; }
+
+  .cover.post .burst { width: 20cqw; font-size: 3cqw; }
+  .cover.post .burst small { font-size: 4.4cqw; }
+  .cover.post .lines { top: 29cqh; width: 38cqw; }
+  .cover.post .lines h2 { font-size: 4.6cqw; }
+  .cover.post .lines .page { font-size: 2.4cqw; }
+  .cover.post .mast { top: 6.5cqh; }
+  .cover.post .sig { display: none; }
+  .cover.post .mast .big { font-size: 9.6cqw; }
+  .cover.post .mast .small { font-size: 5.1cqw; }
+  .cover.post .art { height: 75cqh; bottom: 13cqh; }
+  .cover.post .strip { height: 13cqh; }
+  .cover.post .strip .when { font-size: 3.5cqw; }
+  .cover.post .sig { bottom: 15cqh; }
+
+  /* ---------- little animations ---------- */
+  .art .balloon { animation: bob 5s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+  @keyframes bob { 50% { transform: translate(-6px, -14px) rotate(-3deg); } }
+  .art .bat { animation: flap .5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: center; }
+  .art .bat:nth-of-type(2) { animation-delay: -.2s; }
+  @keyframes flap { to { transform: scaleY(.35); } }
+  .art .flyA { animation: flyA 9s ease-in-out infinite; }
+  .art .flyB { animation: flyB 11s ease-in-out infinite; }
+  @keyframes flyA { 50% { transform: translate(-40px, 20px); } }
+  @keyframes flyB { 50% { transform: translate(30px, -25px); } }
+  .art .blink { animation: blink 5s steps(1) infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes blink { 96% { transform: scaleY(.1); } }
+  .art .glint { animation: glint 3.2s ease-in-out infinite; }
+  @keyframes glint { 0%,70%,100% { opacity: 0; } 80% { opacity: 1; } }
+  .art .fan { animation: fan 6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
+  @keyframes fan { 50% { transform: rotate(6deg); } }
+
+  .controls { display: flex; gap: 8px; }
+  .controls button { background: #222; color: #eee; border: 1px solid #444; border-radius: 6px;
+    padding: 6px 14px; font: 700 15px var(--sans); cursor: pointer; }
+  .controls button[aria-pressed="true"] { background: var(--red); border-color: #ff6a6a; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<main class="cover" id="cover" aria-label="Aloha Film Awards magazine-style poster">
+  <p class="price"><b>13¢</b>&nbsp; Local Frights &nbsp;Nov 13</p>
+
+  <div class="mast"><div class="big">ALOHA</div><div class="small">FILM AWARDS</div></div>
+
+  <div class="lines">
+    <h2>The monsters <em>roll the dice</em> on our students’ horror &amp; thriller films</h2>
+    <p class="page">Page 13</p>
+  </div>
+
+  <div class="burst">
+    <svg viewBox="-50 -50 100 100" aria-hidden="true"><polygon id="star" fill="#e9b53c" stroke="#1b1410" stroke-width="1.6"/></svg>
+    <span>FEELING<br>LUCKY?<small>if you dare</small></span>
+  </div>
+
+  <!-- ===== the illustration: ink lines + watercolour washes ===== -->
+  <svg class="art" viewBox="0 -70 1000 1470" aria-hidden="true">
+    <defs>
+      <!-- wobbly hand-inked edges + watercolour blotches inside each shape -->
+      <filter id="ink" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="4" result="w"/>
+        <feDisplacementMap in="SourceGraphic" in2="w" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+        <feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="3" seed="9" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 .2  0 0 0 0 .12  0 0 0 0 .05  0 0 0 -.9 .5" result="blot"/>
+        <feComposite in="blot" in2="d" operator="in" result="tex"/>
+        <feMerge><feMergeNode in="d"/><feMergeNode in="tex"/></feMerge>
+      </filter>
+      <linearGradient id="gold" x1="0" x2="1">
+        <stop offset="0" stop-color="#8a5a10"/><stop offset=".3" stop-color="#f6d77a"/>
+        <stop offset=".55" stop-color="#e2a92f"/><stop offset="1" stop-color="#7a4b08"/>
+      </linearGradient>
+      <linearGradient id="goldTop" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff0b8"/><stop offset="1" stop-color="#e6b23a"/>
+      </linearGradient>
+      <radialGradient id="mask" cx=".38" cy=".35" r=".8">
+        <stop offset="0" stop-color="#fffaf0"/><stop offset=".6" stop-color="#eee3c9"/><stop offset="1" stop-color="#c9b48d"/>
+      </radialGradient>
+      <linearGradient id="suit" x1="0" x2="1">
+        <stop offset="0" stop-color="#2f3a55"/><stop offset=".5" stop-color="#1f2740"/><stop offset="1" stop-color="#121726"/>
+      </linearGradient>
+      <!-- pen hatching for shadows -->
+      <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+        <line x1="0" y1="0" x2="0" y2="9" stroke="#1b1410" stroke-width="1.6" opacity=".55"/>
+      </pattern>
+    </defs>
+
+    <g stroke="#1b1410" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" filter="url(#ink)">
+
+      <!-- floor shadow -->
+      <ellipse cx="560" cy="1345" rx="440" ry="34" fill="#1b1410" opacity=".14" stroke="none"/>
+
+      <!-- red balloon, tied to Jason's card hand -->
+      <path d="M905,520 C880,640 850,700 830,760" fill="none" stroke-width="2.5"/>
+      <g class="balloon">
+        <path d="M905,240 C975,240 1000,320 990,380 C978,450 935,505 905,520 C875,505 832,450 820,380 C810,320 835,240 905,240Z" fill="#d1202a"/>
+        <path d="M895,520 L915,520 L905,505Z" fill="#a8151d"/>
+        <path d="M850,300 C860,275 880,265 900,262" fill="none" stroke="#fff" stroke-width="7" opacity=".7"/>
+        <text x="905" y="410" fill="#fff" stroke="none" font-family="Archivo Black, sans-serif" font-size="90" text-anchor="middle">13</text>
+      </g>
+
+      <!-- bats -->
+      <g class="flyA"><path class="bat" d="M720,60 C735,40 760,45 770,62 C780,48 795,48 800,60 C808,48 822,48 830,62 C840,45 865,40 880,60 C860,62 845,75 840,90 C825,78 815,80 800,95 C785,80 775,78 760,90 C755,75 740,62 720,60Z" fill="#1b1410"/></g>
+      <g class="flyB"><path class="bat" d="M560,10 C570,-2 588,2 594,12 C600,3 610,3 614,12 C620,3 630,3 634,12 C640,2 658,-2 668,10 C654,12 644,20 640,30 C630,22 624,24 614,34 C604,24 598,22 588,30 C584,20 574,12 560,10Z" fill="#1b1410"/></g>
+
+      <!-- ===== TROPHY: a golden die on a pillar ===== -->
+      <path d="M120,1160 L400,1160 L410,1330 L110,1330Z" fill="#1d1a19"/>
+      <rect x="112" y="1190" width="296" height="24" fill="url(#gold)" stroke-width="3"/>
+      <rect x="180" y="1240" width="160" height="56" rx="6" fill="url(#gold)" stroke-width="3"/>
+      <text x="260" y="1279" stroke="none" fill="#3a2506" font-family="Archivo Black, sans-serif" font-size="30" text-anchor="middle">FRI · 13</text>
+      <path d="M150,1110 L370,1110 L385,1160 L135,1160Z" fill="url(#gold)"/>
+      <path d="M228,800 L292,800 L305,1110 L215,1110Z" fill="url(#gold)"/>
+      <path d="M236,820 L246,1100" fill="none" stroke="#fff6d0" stroke-width="5" opacity=".8"/>
+      <!-- die faces -->
+      <polygon points="260,575 360,628 260,682 160,628" fill="url(#goldTop)"/>
+      <polygon points="160,628 260,682 260,800 160,746" fill="#d6a032"/>
+      <polygon points="260,682 360,628 360,746 260,800" fill="#9c6714"/>
+      <polygon points="160,746 260,800 360,746 360,760 260,812 160,760" fill="#6b440a" stroke-width="3"/>
+      <g fill="#1b1410" stroke="none">
+        <ellipse cx="260" cy="628" rx="16" ry="9"/>
+        <ellipse cx="183" cy="660" rx="9" ry="12"/><ellipse cx="210" cy="714" rx="9" ry="12"/><ellipse cx="237" cy="768" rx="9" ry="12"/>
+        <ellipse cx="283" cy="690" rx="8" ry="11"/><ellipse cx="283" cy="725" rx="8" ry="11"/><ellipse cx="283" cy="760" rx="8" ry="11"/>
+        <ellipse cx="336" cy="663" rx="8" ry="11"/><ellipse cx="336" cy="698" rx="8" ry="11"/><ellipse cx="336" cy="733" rx="8" ry="11"/>
+      </g>
+      <path class="glint" d="M198,612 l8,-22 l8,22 l22,8 l-22,8 l-8,22 l-8,-22 l-22,-8Z" fill="#fff" stroke="none"/>
+
+      <!-- ===== JASON (caricature, in a tux like an awards host) ===== -->
+      <!-- coat tails -->
+      <path d="M505,770 L455,1040 L565,985Z" fill="url(#suit)"/>
+      <path d="M790,770 L835,1040 L725,985Z" fill="url(#suit)"/>
+      <!-- legs, crossed at the ankle -->
+      <path d="M565,800 L622,800 L640,1050 L700,1235 L655,1245 L590,1060Z" fill="#1f2740"/>
+      <path d="M650,800 L708,800 L690,1050 L610,1235 L565,1228 L640,1040Z" fill="#26304b"/>
+      <path d="M560,1228 C520,1232 505,1262 530,1270 L620,1268 L618,1232Z" fill="#111"/>
+      <path d="M652,1240 C640,1268 660,1276 690,1274 L760,1272 C770,1250 735,1232 700,1232Z" fill="#111"/>
+      <path d="M540,1255 L585,1255 M680,1258 L730,1256" stroke="#888" stroke-width="3"/>
+      <!-- torso -->
+      <path d="M500,425 C560,398 705,398 772,425 C822,447 832,525 818,605 L792,805 L705,822 L640,765 L578,822 L500,805 L480,605 C468,525 470,452 500,425Z" fill="url(#suit)"/>
+      <path d="M745,440 C800,470 810,560 800,650 L782,800 L720,812Z" fill="url(#hatch)" stroke="none"/>
+      <!-- shirt, lapels, studs -->
+      <path d="M598,415 L668,415 L660,650 L633,712 L606,650Z" fill="#fbf7ee"/>
+      <path d="M598,415 L555,565 L612,655 L606,650Z" fill="#3a4766"/>
+      <path d="M668,415 L712,565 L656,655 L660,650Z" fill="#3a4766"/>
+      <circle cx="633" cy="520" r="6" fill="#1b1410"/><circle cx="633" cy="562" r="6" fill="#1b1410"/><circle cx="633" cy="604" r="6" fill="#1b1410"/>
+      <!-- neck -->
+      <path d="M602,370 L665,370 L670,418 L598,418Z" fill="#9c8a72"/>
+      <!-- bow tie -->
+      <path d="M633,428 L590,405 L588,452Z M633,428 L676,405 L678,452Z" fill="#fbf7ee"/>
+      <ellipse cx="633" cy="428" rx="12" ry="14" fill="#fbf7ee"/>
+
+      <!-- left arm leaning on the golden die -->
+      <path d="M505,432 C445,465 380,530 338,598 C326,628 352,656 386,646 L470,612 L548,580 L566,525 C552,485 532,450 505,432Z" fill="url(#suit)"/>
+      <path d="M520,575 L566,555 L575,590 L530,610Z" fill="#fbf7ee"/>
+      <path d="M568,560 C590,548 616,556 618,578 C620,600 598,612 576,604 C566,596 562,578 568,560Z" fill="#b9a68b"/>
+      <path d="M590,560 L610,566 M586,575 L612,580 M588,590 L608,594" stroke-width="2.5"/>
+
+      <!-- right arm down to the card hand -->
+      <path d="M770,430 C822,452 852,540 852,640 C853,700 842,740 834,768 L790,762 C798,700 800,600 778,520Z" fill="url(#suit)"/>
+      <path d="M788,760 L838,766 L836,790 L786,784Z" fill="#fbf7ee"/>
+      <!-- card fan: A♠ K♥ K♠ -->
+      <g class="fan">
+        <g transform="rotate(-24 815 860)"><rect x="780" y="735" width="70" height="100" rx="8" fill="#fffdf6" stroke-width="3"/><text x="790" y="770" font-size="28" font-family="Archivo Black, sans-serif" fill="#1b1410" stroke="none">A♠</text></g>
+        <g transform="rotate(0 815 860)"><rect x="780" y="730" width="70" height="100" rx="8" fill="#fffdf6" stroke-width="3"/><text x="790" y="765" font-size="28" font-family="Archivo Black, sans-serif" fill="#d1202a" stroke="none">K♥</text></g>
+        <g transform="rotate(24 815 860)"><rect x="780" y="735" width="70" height="100" rx="8" fill="#fffdf6" stroke-width="3"/><text x="790" y="770" font-size="28" font-family="Archivo Black, sans-serif" fill="#1b1410" stroke="none">K♠</text></g>
+      </g>
+      <path d="M790,790 C800,770 840,770 848,795 C855,820 830,840 805,832 C790,826 784,806 790,790Z" fill="#b9a68b"/>
+
+      <g transform="translate(633 400) scale(1.3) translate(-633 -400)">
+      <!-- head behind the mask -->
+      <path d="M515,180 C510,62 752,52 760,172 C768,262 735,336 640,355 C555,345 518,272 515,180Z" fill="#7d6f5e"/>
+      <path d="M700,90 C750,120 765,190 748,260 C735,300 700,330 670,345Z" fill="url(#hatch)" stroke="none"/>
+      <!-- straps -->
+      <path d="M546,168 L516,160 M722,166 L758,156 M552,300 L528,286 M712,298 L740,284" fill="none" stroke-width="8"/>
+      <!-- hockey mask -->
+      <path d="M543,150 C548,80 718,76 722,150 C738,242 716,345 632,398 C546,345 526,242 543,150Z" fill="url(#mask)"/>
+      <path d="M700,140 C718,230 705,320 640,385 C690,330 704,250 700,140Z" fill="url(#hatch)" stroke="none"/>
+      <!-- red chevrons -->
+      <path d="M596,118 L632,166 L668,118" fill="none" stroke="#d1202a" stroke-width="14"/>
+      <path d="M566,248 L586,284 L606,248" fill="none" stroke="#d1202a" stroke-width="11"/>
+      <path d="M660,248 L680,284 L700,248" fill="none" stroke="#d1202a" stroke-width="11"/>
+      <!-- eye holes with eyes peering through -->
+      <path d="M568,205 C580,186 614,188 622,208 C610,224 578,224 568,205Z" fill="#1b1410"/>
+      <path d="M644,208 C652,188 686,186 698,205 C688,224 656,224 644,208Z" fill="#1b1410"/>
+      <g class="blink"><circle cx="600" cy="207" r="6" fill="#f2efe4" stroke="none"/><circle cx="668" cy="207" r="6" fill="#f2efe4" stroke="none"/></g>
+      <!-- breathing holes -->
+      <g fill="#1b1410" stroke="none">
+        <circle cx="580" cy="160" r="5"/><circle cx="686" cy="160" r="5"/>
+        <circle cx="622" cy="240" r="5"/><circle cx="644" cy="240" r="5"/>
+        <circle cx="612" cy="264" r="5"/><circle cx="633" cy="264" r="5"/><circle cx="654" cy="264" r="5"/>
+        <circle cx="600" cy="292" r="5"/><circle cx="622" cy="292" r="5"/><circle cx="644" cy="292" r="5"/><circle cx="666" cy="292" r="5"/>
+        <circle cx="612" cy="318" r="5"/><circle cx="633" cy="318" r="5"/><circle cx="654" cy="318" r="5"/>
+        <circle cx="622" cy="344" r="5"/><circle cx="644" cy="344" r="5"/>
+      </g>
+      <path d="M572,120 C585,100 610,92 630,92" fill="none" stroke="#fff" stroke-width="6" opacity=".9"/>
+      </g>
+
+      <!-- ===== DRACULA peeking in, bottom-left ===== -->
+      <path d="M-20,1345 C0,1230 30,1130 62,1100 L170,1100 C202,1130 232,1230 252,1345 C215,1325 190,1340 160,1325 C125,1342 95,1325 62,1340 C30,1325 10,1340 -20,1345Z" fill="#141018"/>
+      <path d="M60,1130 C45,1210 40,1280 35,1330 M116,1120 L116,1330 M172,1130 C188,1210 195,1280 200,1330" fill="none" stroke="#3a3044" stroke-width="3"/>
+      <path d="M10,990 L52,1112 L180,1112 L222,990 L170,1078 L62,1078Z" fill="#a3161e"/>
+      <path d="M25,1010 L58,1095 L66,1080Z M207,1010 L174,1095 L166,1080Z" fill="#5e0b10" stroke="none"/>
+      <ellipse cx="116" cy="1040" rx="56" ry="70" fill="#c9d3bd"/>
+      <path d="M150,995 C165,1030 165,1075 140,1100 C160,1060 158,1030 150,995Z" fill="url(#hatch)" stroke="none"/>
+      <path d="M58,1028 C52,968 180,962 174,1028 L148,1006 L116,1046 L84,1006Z" fill="#1b1410"/>
+      <path d="M80,1030 L104,1040 M152,1030 L128,1040" fill="none" stroke-width="6"/>
+      <circle cx="94" cy="1050" r="7" fill="#d1202a" stroke-width="3"/><circle cx="138" cy="1050" r="7" fill="#d1202a" stroke-width="3"/>
+      <path d="M90,1086 C105,1096 128,1096 142,1086" fill="none" stroke-width="4"/>
+      <path d="M100,1089 L104,1104 L109,1091Z M124,1091 L128,1104 L132,1089Z" fill="#fff" stroke-width="2.5"/>
+      <!-- his hand holding a single die -->
+      <path d="M150,1150 C175,1130 210,1140 212,1165 C214,1190 190,1200 165,1192Z" fill="#c9d3bd"/>
+      <rect x="168" y="1110" width="56" height="56" rx="9" fill="#fffdf6" transform="rotate(-14 196 1138)"/>
+      <g fill="#d1202a" stroke="none" transform="rotate(-14 196 1138)"><circle cx="196" cy="1138" r="8"/></g>
+
+      <!-- ===== BLACK CAT at Jason's feet ===== -->
+      <path d="M950,1320 C1010,1300 1000,1225 965,1215" fill="none" stroke-width="16"/>
+      <path d="M842,1334 C828,1252 858,1198 900,1198 C942,1198 966,1258 954,1334Z" fill="#1b1410"/>
+      <circle cx="900" cy="1168" r="40" fill="#1b1410"/>
+      <path d="M866,1150 L866,1104 L896,1134Z M934,1150 L934,1104 L904,1134Z" fill="#1b1410"/>
+      <g class="blink">
+        <path d="M876,1166 C882,1154 896,1156 898,1168 C892,1176 880,1176 876,1166Z" fill="#f6d33c" stroke="none"/>
+        <path d="M902,1168 C904,1156 918,1154 924,1166 C920,1176 908,1176 902,1168Z" fill="#f6d33c" stroke="none"/>
+        <path d="M887,1158 L887,1176 M913,1158 L913,1176" stroke-width="3"/>
+      </g>
+      <path d="M870,1185 L840,1180 M870,1190 L842,1194 M930,1185 L960,1180 M930,1190 L958,1194" stroke="#bdb6a6" stroke-width="1.8"/>
+    </g>
+  </svg>
+
+  <p class="sig">Aloha ’26</p>
+
+  <div class="strip">
+    <p class="when">FRIDAY <em>13</em> NOVEMBER · ALOHA COLLEGE MARBELLA</p>
+    <p class="what">A night of preliminary projects made by our students in one month</p>
+  </div>
+</main>
+
+<div class="controls">
+  <button id="reel" aria-pressed="true">Reel 9:16</button>
+  <button id="post" aria-pressed="false">Post 4:5</button>
+</div>
+
+<script>
+  // 13-point starburst for the "Feeling lucky?" badge
+  const pts = [];
+  for (let i = 0; i < 26; i++) {
+    const r = i % 2 ? 36 : 48, a = (i / 26) * Math.PI * 2;
+    pts.push((r * Math.cos(a)).toFixed(1) + ',' + (r * Math.sin(a)).toFixed(1));
+  }
+  document.getElementById('star').setAttribute('points', pts.join(' '));
+
+  // Reel / post format switch
+  const cover = document.getElementById('cover');
+  const reelBtn = document.getElementById('reel'), postBtn = document.getElementById('post');
+  function setFormat(post) {
+    cover.classList.toggle('post', post);
+    reelBtn.setAttribute('aria-pressed', !post);
+    postBtn.setAttribute('aria-pressed', post);
+  }
+  reelBtn.onclick = () => setFormat(false);
+  postBtn.onclick = () => setFormat(true);
+</script>
+</body>
+</html>
