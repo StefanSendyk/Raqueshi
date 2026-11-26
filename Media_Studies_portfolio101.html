@@ -2429,6 +2429,26 @@ function mmGo(p, anchor) {
   parent.setTimeout(&quot;var c=document.getElementById(&#x27;mm-curtain&#x27;);if(c&amp;&amp;c.style.opacity===&#x27;1&#x27;){c.style.opacity=&#x27;0&#x27;;c.style.pointerEvents=&#x27;none&#x27;;}&quot;, 5000);
 }
 &lt;/script&gt;
+&lt;style&gt;
+h1, h2, .part-title, .hero-title h1, .next strong, .mm-toc-grp &gt; h3, .mm-toc-head .t, .mmo-title, .pc-title, .poster figcaption b, .proj h3, .screen .soon b { font-kerning: none; }
+header.hero { min-height: min(86vh, max(470px, calc(100vw / 2.39))); padding-top: 120px; padding-bottom: clamp(46px, 6vw, 76px); }
+header.hero::before { content: &quot;&quot;; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.18) 55%, transparent 80%), linear-gradient(180deg, transparent 55%, var(--ink) 100%); }
+header.hero .hero-photo { filter: saturate(0.88) contrast(1.06) brightness(0.6); }
+header.hero .hero-top { margin: 0 !important; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; width: fit-content; padding: 7px 12px;
+  border: 1px solid rgba(138,150,166,0.5); background: rgba(138,150,166,0.1);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+header.hero .hero-top span { color: var(--cream); text-shadow: none; }
+header.hero .hero-top span + span::before { content: &quot;/&quot;; margin-right: 10px; color: var(--orange); }
+header.hero h1 { margin: 18px 0 0 !important; font-size: clamp(40px, 7vw, 116px) !important; line-height: 0.95 !important;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.55) !important; filter: none; }
+header.hero h1 em { display: block; margin: 0.25em 0 0 0.08em !important; font-size: 0.4em !important; letter-spacing: 0.01em !important;
+  text-transform: none !important; text-shadow: 0 1px 14px rgba(0,0,0,0.6) !important; }
+header.hero .meta-grid { margin: 34px 0 0 !important; width: 100%; max-width: 980px; border-top-color: rgba(236,232,225,0.22); }
+header.hero .meta-grid dt { font-size: 10px; letter-spacing: 0.2em; color: rgba(236,232,225,0.6); }
+header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; color: var(--cream); }
+@media (max-width: 700px) { header.hero .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+&lt;/style&gt;
 &lt;/head&gt;
 &lt;script&gt;window.MM_CLIPS = {&quot;clip_500_days.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@3bacd2b/media_photos_hq/clip_500_days.mp4&quot;, &quot;clip_bullet_train.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@80f48bc/media_photos_hq/clip_bullet_train.mp4&quot;, &quot;clip_fight_club.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@3bacd2b/media_photos_hq/clip_fight_club.mp4&quot;, &quot;clip_hail_mary.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@48b584b/media_photos_hq/clip_hail_mary.mp4&quot;, &quot;clip_inception.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@4c86924/media_photos_hq/clip_inception.mp4&quot;, &quot;clip_into_the_wild.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@be3e9a0/media_photos_hq/clip_into_the_wild.mp4&quot;, &quot;clip_intouchables.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@a734f60/media_photos_hq/clip_intouchables.mp4&quot;, &quot;clip_limitless.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@4c86924/media_photos_hq/clip_limitless.mp4&quot;, &quot;clip_maze_runner.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@ef922cb/media_photos_hq/clip_maze_runner.mp4&quot;, &quot;clip_pacific_rim.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@48b584b/media_photos_hq/clip_pacific_rim.mp4&quot;, &quot;clip_perks.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@3bacd2b/media_photos_hq/clip_perks.mp4&quot;, &quot;clip_pulp_fiction.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@48b584b/media_photos_hq/clip_pulp_fiction.mp4&quot;, &quot;clip_real_steel.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@be3e9a0/media_photos_hq/clip_real_steel.mp4&quot;, &quot;clip_rush_hour.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@95153d4/media_photos_hq/clip_rush_hour.mp4&quot;, &quot;clip_taxi.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@ef922cb/media_photos_hq/clip_taxi.mp4&quot;, &quot;clip_the_martian.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@cbb6059/media_photos_hq/clip_the_martian.mp4&quot;, &quot;clip_the_matrix.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@80f48bc/media_photos_hq/clip_the_matrix.mp4&quot;, &quot;clip_wolf.mp4&quot;: &quot;https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@4c86924/media_photos_hq/clip_wolf.mp4&quot;};&lt;/script&gt;
 &lt;body id=&quot;top&quot;&gt;
@@ -4953,6 +4973,26 @@ function mmGo(p, anchor) {
   parent.setTimeout("var c=document.getElementById('mm-curtain');if(c&&c.style.opacity==='1'){c.style.opacity='0';c.style.pointerEvents='none';}", 5000);
 }
 <\/script>
+<style>
+h1, h2, .part-title, .hero-title h1, .next strong, .mm-toc-grp > h3, .mm-toc-head .t, .mmo-title, .pc-title, .poster figcaption b, .proj h3, .screen .soon b { font-kerning: none; }
+header.hero { min-height: min(86vh, max(470px, calc(100vw / 2.39))); padding-top: 120px; padding-bottom: clamp(46px, 6vw, 76px); }
+header.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.18) 55%, transparent 80%), linear-gradient(180deg, transparent 55%, var(--ink) 100%); }
+header.hero .hero-photo { filter: saturate(0.88) contrast(1.06) brightness(0.6); }
+header.hero .hero-top { margin: 0 !important; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; width: fit-content; padding: 7px 12px;
+  border: 1px solid rgba(138,150,166,0.5); background: rgba(138,150,166,0.1);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+header.hero .hero-top span { color: var(--cream); text-shadow: none; }
+header.hero .hero-top span + span::before { content: "/"; margin-right: 10px; color: var(--orange); }
+header.hero h1 { margin: 18px 0 0 !important; font-size: clamp(40px, 7vw, 116px) !important; line-height: 0.95 !important;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.55) !important; filter: none; }
+header.hero h1 em { display: block; margin: 0.25em 0 0 0.08em !important; font-size: 0.4em !important; letter-spacing: 0.01em !important;
+  text-transform: none !important; text-shadow: 0 1px 14px rgba(0,0,0,0.6) !important; }
+header.hero .meta-grid { margin: 34px 0 0 !important; width: 100%; max-width: 980px; border-top-color: rgba(236,232,225,0.22); }
+header.hero .meta-grid dt { font-size: 10px; letter-spacing: 0.2em; color: rgba(236,232,225,0.6); }
+header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; color: var(--cream); }
+@media (max-width: 700px) { header.hero .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
 </head>
 <body>
 <script>document.documentElement.classList.add('js');<\/script>
@@ -4996,7 +5036,6 @@ function mmGo(p, anchor) {
     <span>Preliminary task</span>
   </div>
   <h1><span><i>Preliminary</i></span><em>project</em></h1>
-  <p class="tagline">How does it feel to meet the sunrise without meeting someone to meet them with?</p>
   <dl class="meta-grid">
     <div><dt>Format</dt><dd>Short film</dd></div>
     <div><dt>Role</dt><dd>Stefan Sendyk, Valeria Praslova</dd></div>
@@ -6679,6 +6718,26 @@ function mmGo(p, anchor) {
   parent.setTimeout("var c=document.getElementById('mm-curtain');if(c&&c.style.opacity==='1'){c.style.opacity='0';c.style.pointerEvents='none';}", 5000);
 }
 <\/script>
+<style>
+h1, h2, .part-title, .hero-title h1, .next strong, .mm-toc-grp > h3, .mm-toc-head .t, .mmo-title, .pc-title, .poster figcaption b, .proj h3, .screen .soon b { font-kerning: none; }
+header.hero { min-height: min(86vh, max(470px, calc(100vw / 2.39))); padding-top: 120px; padding-bottom: clamp(46px, 6vw, 76px); }
+header.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,0.6), rgba(0,0,0,0.18) 55%, transparent 80%), linear-gradient(180deg, transparent 55%, var(--ink) 100%); }
+header.hero .hero-photo { filter: saturate(0.88) contrast(1.06) brightness(0.6); }
+header.hero .hero-top { margin: 0 !important; align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; width: fit-content; padding: 7px 12px;
+  border: 1px solid rgba(138,150,166,0.5); background: rgba(138,150,166,0.1);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+header.hero .hero-top span { color: var(--cream); text-shadow: none; }
+header.hero .hero-top span + span::before { content: "/"; margin-right: 10px; color: var(--orange); }
+header.hero h1 { margin: 18px 0 0 !important; font-size: clamp(40px, 7vw, 116px) !important; line-height: 0.95 !important;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.55) !important; filter: none; }
+header.hero h1 em { display: block; margin: 0.25em 0 0 0.08em !important; font-size: 0.4em !important; letter-spacing: 0.01em !important;
+  text-transform: none !important; text-shadow: 0 1px 14px rgba(0,0,0,0.6) !important; }
+header.hero .meta-grid { margin: 34px 0 0 !important; width: 100%; max-width: 980px; border-top-color: rgba(236,232,225,0.22); }
+header.hero .meta-grid dt { font-size: 10px; letter-spacing: 0.2em; color: rgba(236,232,225,0.6); }
+header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; color: var(--cream); }
+@media (max-width: 700px) { header.hero .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
 </head>
 <body>
 <script>document.documentElement.classList.add('js');<\/script>
@@ -6696,7 +6755,6 @@ function mmGo(p, anchor) {
     <span>Final project</span>
   </div>
   <h1><span><i>Final</i></span><em>project</em></h1>
-  <p class="tagline">The opening of an action film, made with Anna Van Der Lip under our own studio, Still House Productions.</p>
   <dl class="meta-grid">
     <div><dt>Format</dt><dd>Film opening</dd></div>
     <div><dt>Genre</dt><dd>Action</dd></div>
