@@ -5,8 +5,8 @@
 <div id="mm-root" style="min-height:60vh;background:#000"></div>
 <script>
 (function () {
-  var PORTFOLIO = 'https://raw.githubusercontent.com/StefanSendyk/Raqueshi/062aa67524700d1f1d8c5ac7d78891fd37c92bf8/Media_Studies_portfolio101.html';
-  var BACKUP = 'https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@062aa67524700d1f1d8c5ac7d78891fd37c92bf8/Media_Studies_portfolio101.html';
+  var PORTFOLIO = 'https://raw.githubusercontent.com/StefanSendyk/Raqueshi/91d81cb5bb9ad7238108308fb730fd552c7884bd/Media_Studies_portfolio101.html';
+  var BACKUP = 'https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@91d81cb5bb9ad7238108308fb730fd552c7884bd/Media_Studies_portfolio101.html';
   var root = document.getElementById('mm-root');
   function get(url) { return fetch(url, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }); }
   get(PORTFOLIO).catch(function () { return get(BACKUP); }).then(function (html) {
