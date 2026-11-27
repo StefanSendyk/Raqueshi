@@ -6882,6 +6882,25 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
   .fp-script p.sc-sub, .fp-script .sh span { color: #6b6b6b !important; }
   .fp-script b { display: inline !important; margin: 0 !important; font-family: inherit !important; font-size: inherit !important; letter-spacing: 0 !important; }
   .fp-script p { max-width: none !important; font-size: 15px !important; font-family: 'Courier Prime', 'Courier New', monospace !important; }
+  /* costume & make-up: wardrobe cards with a colour strip for each outfit */
+  .fp-wardrobe { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 760px) { .fp-wardrobe { grid-template-columns: minmax(0, 1fr); } }
+  .wd-card { position: relative; padding: 0 22px 22px; border: 1px solid rgba(236,232,225,0.12); border-radius: 6px; overflow: hidden;
+    background: linear-gradient(180deg, rgba(24,26,31,0.96), rgba(12,13,16,0.96)); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+  .wd-strip { display: flex; height: 10px; margin: 0 -22px 20px; border-bottom: 1px solid rgba(236,232,225,0.12); }
+  .wd-strip i { width: var(--w); background: var(--c); }
+  .wd-count { position: absolute; top: 22px; right: 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--orange); }
+  .wd-card h4 { font-family: var(--display); font-size: 24px; color: var(--cream); }
+  .wd-role { margin: 2px 0 14px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .wd-items { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .wd-items li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px 6px 8px; border: 1px solid rgba(236,232,225,0.14); border-radius: 99px; font-size: 13.5px; color: #c9d0de; }
+  .wd-items li i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1px rgba(236,232,225,0.35); }
+  .wd-items li small { color: var(--muted); font-size: 11px; }
+  .wd-items.plain li { padding-left: 11px; }
+  .wd-note { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(236,232,225,0.14); font-size: 14.5px; color: #c9d0de; }
+  .wd-note b, .wd-makeup b { display: block; margin-bottom: 4px; font-family: var(--mono); font-weight: 400; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+  .wd-makeup { margin-top: 16px; padding: 16px 20px; border-left: 2px solid var(--orange); background: rgba(236,232,225,0.03); color: #c9d0de; font-size: 15px; }
+  .wd-strip { gap: 2px; height: 12px; } .wd-strip i { box-shadow: inset 0 0 0 1px rgba(236,232,225,0.22); }
   /* VERSION 102 — the sidebar (chapters, slate, meter) scrolls on its own; the open clapstick has room above the slate instead of being clipped */
   .side { max-height: calc(100vh - 120px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 0 6px 24px 0;
     scrollbar-width: thin; scrollbar-color: rgba(236,232,225,0.18) transparent; }
@@ -7567,7 +7586,37 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
       <div class="todo short rv">Casting &amp; auditions — to be added</div>
 
       <div class="plan-head rv"><h3>Costume &amp; make-up</h3><span>For the actors</span></div>
-      <div class="todo short rv">Costume &amp; make-up — to be added</div>
+      <div class="fp-wardrobe">
+        <article class="wd-card rv">
+          <div class="wd-strip" aria-hidden="true"><i style="--c:#0d0d0f;--w:34%"></i><i style="--c:#efece6;--w:14%"></i><i style="--c:#0d0d0f;--w:6%"></i><i style="--c:#0d0d0f;--w:46%"></i></div>
+          <span class="wd-count">× 2</span>
+          <h4>Monday &amp; Friday</h4>
+          <p class="wd-role">The agents</p>
+          <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>Black trousers</li><li><i style="--c:#0d0d0f"></i>Black blazer</li><li><i style="--c:#efece6"></i>White shirt</li><li><i style="--c:#0d0d0f"></i>Black tie</li><li><i style="--c:#0d0d0f"></i>Black shoes</li></ul>
+          <p class="wd-note"><b>Stand-out detail</b>Something unique that catches the eye, so the two agents don’t blend together in pure black suits.</p>
+        </article>
+        <article class="wd-card rv d1">
+          <div class="wd-strip" aria-hidden="true"><i style="--c:#0d0d0f;--w:40%"></i><i style="--c:#2a2c31;--w:14%"></i><i style="--c:#0d0d0f;--w:46%"></i></div>
+          <span class="wd-count">× 1</span>
+          <h4>The villain</h4>
+          <p class="wd-role">Seen only as a silhouette</p>
+          <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>Black trousers</li><li><i style="--c:#0d0d0f"></i>Black blazer</li><li><i style="--c:#0d0d0f"></i>Black shirt</li><li><i style="--c:#0d0d0f"></i>Black tie</li><li><i style="--c:#0d0d0f"></i>Black shoes</li><li><i style="--c:#0d0d0f"></i>Black gloves <small>optional</small></li></ul>
+          <p class="wd-note"><b>Maybe</b>A mask.</p>
+        </article>
+        <article class="wd-card rv">
+          <div class="wd-strip" aria-hidden="true"><i style="--c:#0d0d0f;--w:100%"></i></div>
+          <h4>The robber</h4>
+          <p class="wd-role">The alley</p>
+          <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>All-black clothes</li></ul>
+        </article>
+        <article class="wd-card rv d1">
+          <div class="wd-strip" aria-hidden="true"><i style="--c:#6f7a86;--w:22%"></i><i style="--c:#a99a7f;--w:20%"></i><i style="--c:#4f5d4a;--w:18%"></i><i style="--c:#8a6f5c;--w:20%"></i><i style="--c:#c9c3b6;--w:20%"></i></div>
+          <h4>Extras</h4>
+          <p class="wd-role">Casual, everyday clothes</p>
+          <ul class="wd-items plain"><li>The runner</li><li>Two chasers</li><li>The woman whose coffee is stolen</li><li>The person who is robbed</li></ul>
+        </article>
+      </div>
+      <p class="wd-makeup rv"><b>Make-up</b>Optional: maybe, just to make the actors look a bit better on camera.</p>
 
       <div class="plan-head rv"><h3>Risk assessment</h3><span>Keeping everyone safe</span></div>
       <div class="fp-table rv">
