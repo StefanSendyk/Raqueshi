@@ -25,9 +25,10 @@
   .slate-top, .slate-bar { filter: none; opacity: 0.9; background: repeating-linear-gradient(-45deg, #efece6 0 14px, #c4373e 14px 28px); }
   .fp-mind2 .mm-hub { color: #fff; }
   /* 104b: "Our approach" as four tall, narrow cards in one row */
-  #studio .fp-gaps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  #studio .fp-gaps div { min-height: 260px; padding: 24px 20px; }
-  @media (max-width: 760px) { #studio .fp-gaps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* any row of exactly four cards (Our approach, Gaps we can fill, Sound plan): tall, narrow, one row */
+  .fp-gaps:has(> div:nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .fp-gaps:has(> div:nth-child(4):last-child) > div { min-height: 260px; padding: 24px 20px; }
+  @media (max-width: 760px) { .fp-gaps:has(> div:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   /* 104b: a longer film strip */
   ol.fp-strip li { flex-basis: min(440px, 86%); }
   ol.fp-strip { padding: 34px 0; }
