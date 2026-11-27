@@ -63,3 +63,40 @@
   .fp-mind2 .mm-card.pick { border-color: rgba(214,168,90,0.55); background: linear-gradient(180deg, rgba(214,168,90,0.14), rgba(12,13,16,0.96)); }
   @media (prefers-reduced-motion: reduce) { .fp-mind2 .mm-wires .w-flow, .fp-mind2 .mm-hub::before { animation: none; } }
   @media (max-width: 900px) { .fp-mind2 { padding: 22px 16px; } .fp-mind2 .mm-hub::before { display: none; } }
+  /* 104g: sidebar — case file card, now-playing strip, and a watch that ticks from 8:50 to 9:00 as you read */
+  .side { gap: 26px !important; }
+  .dd-case { position: relative; padding: 16px 16px 18px; border: 1px solid rgba(236,232,225,0.14); border-radius: 4px; overflow: hidden;
+    background: repeating-linear-gradient(0deg, rgba(236,232,225,0.03) 0 1px, transparent 1px 22px), #0b0c0e; }
+  .dd-case-top { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dashed rgba(236,232,225,0.18);
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .dd-case-top span + span { color: #d6a85a; }
+  .dd-case-title { margin: 10px 0 12px; font-family: 'Special Elite', monospace; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--cream); }
+  .dd-agents { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+  .dd-agents li { padding-left: 10px; border-left: 2px solid #d6a85a; }
+  .dd-agents b { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); }
+  .dd-agents span { font-size: 11.5px; color: var(--muted); }
+  .dd-redact { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 8px; margin-top: 6px; }
+  .dd-redact span { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .dd-redact i { display: block; width: var(--w); height: 9px; background: #efece6; opacity: 0.85; }
+  .dd-stamp { position: absolute; right: 10px; bottom: 54px; padding: 3px 8px; border: 2px solid #d6a85a; border-radius: 3px; transform: rotate(-12deg);
+    font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #d6a85a; opacity: 0.75; pointer-events: none; }
+  .dd-now { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(236,232,225,0.12); border-radius: 30px; background: #0b0c0e; }
+  .dd-now small { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #d6a85a; }
+  .dd-now b { display: block; font-family: var(--display); font-weight: 400; font-size: 15px; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dd-now span { font-size: 11px; color: var(--muted); }
+  .dd-eq { display: flex; align-items: flex-end; gap: 3px; height: 22px; }
+  .dd-eq i { width: 3px; height: 30%; background: #d6a85a; border-radius: 1px; animation: ddeq 1.1s ease-in-out infinite; }
+  .dd-eq i:nth-child(2) { animation-delay: -0.4s; } .dd-eq i:nth-child(3) { animation-delay: -0.8s; } .dd-eq i:nth-child(4) { animation-delay: -0.2s; } .dd-eq i:nth-child(5) { animation-delay: -0.6s; }
+  @keyframes ddeq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
+  .dd-watch svg { width: 74px; height: 74px; transform: none !important; }
+  .dd-watch .track, .dd-watch .fill { transform: rotate(-90deg); transform-origin: 32px 32px; }
+  .dd-watch .face { fill: #0b0c0e; stroke: rgba(236,232,225,0.25); stroke-width: 1; }
+  .dd-watch .ticks line { stroke: rgba(236,232,225,0.55); stroke-width: 1.2; stroke-linecap: round; }
+  .dd-watch .hh, .dd-watch .mh { stroke-linecap: round; transform-origin: 32px 32px; }
+  .dd-watch .hh { stroke: var(--cream); stroke-width: 2.4; transform: rotate(calc(265deg + var(--read, 0) * 5deg)); }
+  .dd-watch .mh { stroke: #d6a85a; stroke-width: 1.6; transform: rotate(calc(300deg + var(--read, 0) * 60deg)); }
+  .dd-watch .pin { fill: #d6a85a; }
+  .dd-watch em { display: block; margin-top: 4px; font-family: 'Special Elite', monospace; font-style: normal; font-size: 15px; letter-spacing: 0.06em; color: #d6a85a; }
+  @media (prefers-reduced-motion: reduce) { .dd-eq i { animation: none; height: 60%; } }
+  .dd-stamp { position: static; display: inline-block; margin-top: 14px; transform: rotate(-4deg); }
+  .dd-redact { grid-template-columns: 78px minmax(0, 1fr); }

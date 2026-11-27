@@ -50,6 +50,13 @@ li = re.sub(r'\{img:([^|]+)\|([^}]+)\}', lambda m: '<img src="%s%s" onerror="thi
 p = p[:i] + '\n' + li + '      ' + p[j:]
 s = s[:a] + p + s[e:]
 
+# 104g: final page sidebar — case file, now playing, watch meter
+a = s.index('<script type="text/plain" id="mm-page-final">'); e = s.index('</html>\n</script>', a); p = s[a:e]
+i = p.index('    <div class="meter" aria-hidden="true">'); j = p.index('</aside>', i)
+p = p[:i] + rd('sidebar_final_v104.html') + '  ' + p[j:]
+i = p.rindex('</body>'); p = p[:i] + rd('sidebar_final_v104.js') + p[i:]
+s = s[:a] + p + s[e:]
+
 # pin every image link to the commit that holds the images (jsDelivr caches branch links for days)
 PIN = os.environ.get('PIN')
 if PIN: s = s.replace('StefanSendyk/Raqueshi@MediaStudies/', 'StefanSendyk/Raqueshi@%s/' % PIN)

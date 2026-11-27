@@ -7,3 +7,4 @@
   /* the frame only goes round the board, not up the sides of the open clapstick */
   .slate { border-color: transparent; background: none; }
   .slate::before { content: ""; position: absolute; inset: 54px 0 0 0; z-index: -1; border: 1px solid var(--hair); border-radius: 4px; background: var(--navy); pointer-events: none; }
+  .side { grid-template-columns: minmax(0, 1fr); } .side > * { min-width: 0; max-width: 100%; } .side .toc a { letter-spacing: 0.1em; }
