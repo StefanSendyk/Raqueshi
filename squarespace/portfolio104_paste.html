@@ -6901,6 +6901,10 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
   .wd-note b, .wd-makeup b { display: block; margin-bottom: 4px; font-family: var(--mono); font-weight: 400; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
   .wd-makeup { margin-top: 16px; padding: 16px 20px; border-left: 2px solid var(--orange); background: rgba(236,232,225,0.03); color: #c9d0de; font-size: 15px; }
   .wd-strip { gap: 2px; height: 12px; } .wd-strip i { box-shadow: inset 0 0 0 1px rgba(236,232,225,0.22); }
+  .wd-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wd-makeup ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 8px; }
+  .wd-makeup li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; }
+  .wd-makeup li span { font-family: var(--display); color: var(--cream); }
   /* VERSION 102 — the sidebar (chapters, slate, meter) scrolls on its own; the open clapstick has room above the slate instead of being clipped */
   .side { max-height: calc(100vh - 120px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 0 6px 24px 0;
     scrollbar-width: thin; scrollbar-color: rgba(236,232,225,0.18) transparent; }
@@ -7593,7 +7597,7 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
           <h4>Monday &amp; Friday</h4>
           <p class="wd-role">The agents</p>
           <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>Black trousers</li><li><i style="--c:#0d0d0f"></i>Black blazer</li><li><i style="--c:#efece6"></i>White shirt</li><li><i style="--c:#0d0d0f"></i>Black tie</li><li><i style="--c:#0d0d0f"></i>Black shoes</li></ul>
-          <p class="wd-note"><b>Stand-out detail</b>Something unique that catches the eye, so the two agents don’t blend together in pure black suits.</p>
+          <div class="wd-note wd-split"><div><b>Monday stands out with</b>One side of his shirt always untucked, and wired headphones.</div><div><b>Friday stands out with</b>Red lipstick and a lot of jewellery.</div></div>
         </article>
         <article class="wd-card rv d1">
           <div class="wd-strip" aria-hidden="true"><i style="--c:#0d0d0f;--w:40%"></i><i style="--c:#2a2c31;--w:14%"></i><i style="--c:#0d0d0f;--w:46%"></i></div>
@@ -7607,7 +7611,7 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
           <div class="wd-strip" aria-hidden="true"><i style="--c:#0d0d0f;--w:100%"></i></div>
           <h4>The robber</h4>
           <p class="wd-role">The alley</p>
-          <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>All-black clothes</li></ul>
+          <ul class="wd-items"><li><i style="--c:#0d0d0f"></i>Black sporty trousers or shorts</li><li><i style="--c:#0d0d0f"></i>Black hoodie</li><li><i style="--c:#0d0d0f"></i>Black cap</li></ul>
         </article>
         <article class="wd-card rv d1">
           <div class="wd-strip" aria-hidden="true"><i style="--c:#6f7a86;--w:22%"></i><i style="--c:#a99a7f;--w:20%"></i><i style="--c:#4f5d4a;--w:18%"></i><i style="--c:#8a6f5c;--w:20%"></i><i style="--c:#c9c3b6;--w:20%"></i></div>
@@ -7616,7 +7620,7 @@ header.hero .meta-grid dd { margin-top: 8px; font-weight: 400; font-size: 15px; 
           <ul class="wd-items plain"><li>The runner</li><li>Two chasers</li><li>The woman whose coffee is stolen</li><li>The person who is robbed</li></ul>
         </article>
       </div>
-      <p class="wd-makeup rv"><b>Make-up</b>Optional: maybe, just to make the actors look a bit better on camera.</p>
+      <div class="wd-makeup rv"><b>Make-up</b><ul><li><span>Friday</span>Red lipstick: she fixes it on screen while the fight happens behind her car.</li><li><span>Monday</span>Tired eyes, as if he has just woken up from the nightmare.</li><li><span>Everyone</span>A little powder, so faces don’t look shiny on camera.</li></ul></div>
 
       <div class="plan-head rv"><h3>Risk assessment</h3><span>Keeping everyone safe</span></div>
       <div class="fp-table rv">

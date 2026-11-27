@@ -88,3 +88,7 @@
   .wd-note b, .wd-makeup b { display: block; margin-bottom: 4px; font-family: var(--mono); font-weight: 400; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
   .wd-makeup { margin-top: 16px; padding: 16px 20px; border-left: 2px solid var(--orange); background: rgba(236,232,225,0.03); color: #c9d0de; font-size: 15px; }
   .wd-strip { gap: 2px; height: 12px; } .wd-strip i { box-shadow: inset 0 0 0 1px rgba(236,232,225,0.22); }
+  .wd-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .wd-makeup ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 8px; }
+  .wd-makeup li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; }
+  .wd-makeup li span { font-family: var(--display); color: var(--cream); }
