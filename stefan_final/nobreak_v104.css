@@ -1,0 +1,18 @@
+  /* 104c: nothing breaks out of the column — chapter film stills sit inside it and the sidebar never fades */
+  html.side-away .body > .side { opacity: 1; transform: none; pointer-events: auto; }
+  /* 104d: the left column (sidebar) stays black: chapter tints stop just left of the content column */
+  main > section.chapter { clip-path: inset(-3px -100vmax 0 -24px); }
+  /* chapter film stills fill everything right of the sidebar and sit behind the chapter heading */
+  .ch-band { margin: 0 0 0 -24px !important; width: calc(var(--vw, 100vw) - var(--ml, 0px) + 24px) !important; height: min(66vh, 620px); border-radius: 0; }
+  .ch-band figcaption { right: var(--g, 40px); top: 16px; }
+  .ch-big > .ch-band + .ctag { margin-top: -210px !important; }
+  .side nav.toc { background: transparent !important; }
+  /* 104e: chapter numbers sit beside the heading, divided by a thin rule, instead of floating top-right */
+  .ch-head { position: relative; z-index: 1; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 0 clamp(18px, 2.4vw, 34px); }
+  .ch-head .ch-num { position: static; z-index: auto; align-self: stretch; display: flex; align-items: center; padding-right: clamp(18px, 2.4vw, 34px);
+    border-right: 1px solid rgba(236,232,225,0.16); font-size: clamp(64px, 7vw, 108px); line-height: 0.8; color: var(--orange); -webkit-text-stroke: 0; opacity: 0.95; }
+  .ch-titles > .ctag { margin-top: 0; }
+  .ch-titles > h2 { margin-bottom: 0 !important; }
+  .ch-head + * { margin-top: 26px; }
+  .ch-big > .ch-band + .ch-head { margin-top: -200px; }
+  @media (max-width: 640px) { .ch-head .ch-num { font-size: 52px; padding-right: 14px; } }

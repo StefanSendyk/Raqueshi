@@ -1,0 +1,9 @@
+  /* VERSION 102 — the sidebar (chapters, slate, meter) scrolls on its own; the open clapstick has room above the slate instead of being clipped */
+  .side { max-height: calc(100vh - 120px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; padding: 0 6px 24px 0;
+    scrollbar-width: thin; scrollbar-color: rgba(236,232,225,0.18) transparent; }
+  .side::-webkit-scrollbar { width: 6px; } .side::-webkit-scrollbar-thumb { background: rgba(236,232,225,0.18); border-radius: 3px; }
+  .slate { padding-top: 28px; isolation: isolate; -webkit-mask-image: -webkit-radial-gradient(white, black); }
+  .slate-top { transform: rotate(-6deg); border-radius: 2px 2px 0 0; }
+  /* the frame only goes round the board, not up the sides of the open clapstick */
+  .slate { border-color: transparent; background: none; }
+  .slate::before { content: ""; position: absolute; inset: 54px 0 0 0; z-index: -1; border: 1px solid var(--hair); border-radius: 4px; background: var(--navy); pointer-events: none; }

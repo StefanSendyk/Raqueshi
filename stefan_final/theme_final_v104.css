@@ -1,0 +1,64 @@
+  /* ===================== VERSION 104: Dirty Deeds case file — black, white and red ===================== */
+  :root { --orange: #c4373e; --peach: #efece6; --cobalt: #efece6; }
+  main > section.chapter:nth-of-type(6n+4) { --tint: #110d0d; --fade: #110d0d; }
+  main > section.chapter::before, main > section.chapter:nth-of-type(n)::before { background: linear-gradient(90deg, #c4373e, #efece6); }
+  /* rubber-stamped file tags */
+  .chapter .idx.ctag { display: inline-block; width: auto; padding: 6px 12px 4px; margin-bottom: 16px; border: 2px solid #c4373e; border-radius: 3px; color: #dc4a50; opacity: 0.9;
+    font-family: 'Special Elite', var(--mono); font-size: 14px; letter-spacing: 0.16em; transform: rotate(-2.5deg); transform-origin: 0 50%; }
+  .chapter .idx.ctag::before { display: none; }
+  .chapter .idx.ctag i { color: inherit; }
+  /* typewritten headings, a redacted case line under each */
+  .chapter h2, .chapter h2 i, .chapter h2 span { font-family: 'Special Elite', 'Courier Prime', monospace !important; font-weight: 400 !important; letter-spacing: 0.01em !important; text-transform: uppercase; text-shadow: none !important; }
+  .chapter h2 em { font-family: 'Courier Prime', monospace !important; font-style: normal !important; text-transform: uppercase; letter-spacing: 0.22em !important; font-size: 0.2em !important; color: #c4373e !important; }
+  .chapter > h2::after { content: "Case: Dirty Deeds  ·  Agents: Monday / Friday  ·  Clearance"; display: block; width: fit-content; margin-top: 16px; padding-right: 136px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase;
+    background: linear-gradient(#efece6, #efece6) right 0 center / 70px 9px no-repeat, linear-gradient(#efece6, #efece6) right 78px center / 46px 9px no-repeat; }
+  .ch-num { font-family: 'Special Elite', monospace; -webkit-text-stroke-color: rgba(196,55,62,0.3); }
+  .plan-head h3 { font-family: 'Special Elite', monospace; font-style: normal; text-transform: uppercase; letter-spacing: 0.04em; font-size: clamp(19px, 2.2vw, 26px); }
+  .plan-head h3::before { content: "§ "; color: #c4373e; }
+  .plan-head { border-bottom-style: dashed; }
+  /* paper-clipped photos */
+  .fp-mood figure { box-shadow: inset 0 0 0 3px rgba(239,236,230,0.9); }
+  .fp-mood figure:nth-child(3n+1)::after, #team .id-photo::after { content: ""; position: absolute; z-index: 2; top: -6px; left: 14px; width: 15px; height: 38px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 60'%3E%3Cpath d='M8 22V8a4 4 0 0 1 8 0v36a7 7 0 0 1-14 0V14' fill='none' stroke='%23d4d4d4' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.6)); }
+  #team .id-photo { position: relative; overflow: visible; }
+  ol.fp-strip li img { box-shadow: inset 0 0 0 2px #efece6; }
+  .slate-top, .slate-bar { filter: none; opacity: 0.9; background: repeating-linear-gradient(-45deg, #efece6 0 14px, #c4373e 14px 28px); }
+  .fp-mind2 .mm-hub { color: #fff; }
+  /* 104b: "Our approach" as four tall, narrow cards in one row */
+  #studio .fp-gaps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #studio .fp-gaps div { min-height: 260px; padding: 24px 20px; }
+  @media (max-width: 760px) { #studio .fp-gaps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* 104b: a longer film strip */
+  ol.fp-strip li { flex-basis: min(440px, 86%); }
+  ol.fp-strip { padding: 34px 0; }
+  /* 104b: Pulp Fiction hero */
+  header.hero .hero-photo { object-position: 70% 38%; }
+  /* 104e: mind maps — a drafting-grid panel, a ringed hub, flowing wires with end dots, numbered cards that light their wire */
+  .fp-mind2 { gap: 22px 64px; padding: 36px 28px; border: 1px solid rgba(236,232,225,0.1); border-radius: 8px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(214,168,90,0.09), transparent 58%),
+                repeating-linear-gradient(0deg, rgba(236,232,225,0.035) 0 1px, transparent 1px 28px),
+                repeating-linear-gradient(90deg, rgba(236,232,225,0.035) 0 1px, transparent 1px 28px), #08090b; }
+  .fp-mind2 .mm-wires .w-base { fill: none; stroke: rgba(236,232,225,0.14); stroke-width: 1.2; }
+  .fp-mind2 .mm-wires .w-flow { fill: none; stroke: #d6a85a; stroke-width: 1.5; stroke-dasharray: 3 9; opacity: 0.75; animation: mmflow 1.6s linear infinite; }
+  .fp-mind2 .mm-wires .w-dot { fill: #d6a85a; }
+  .fp-mind2 .mm-wires .w-end { fill: #08090b; stroke: #d6a85a; stroke-width: 1.5; }
+  .fp-mind2 .mm-wires .hot .w-flow { stroke-width: 2.4; opacity: 1; }
+  .fp-mind2 .mm-wires .hot .w-end { fill: #d6a85a; }
+  @keyframes mmflow { to { stroke-dashoffset: -24; } }
+  @keyframes mmspin { to { transform: rotate(360deg); } }
+  .fp-mind2 .mm-hub { aspect-ratio: 1; width: 100%; max-width: 190px; justify-self: center; border-radius: 50%; color: #111 !important;
+    background: radial-gradient(circle at 34% 28%, #f6dfae, #d6a85a 55%, #8f6c30);
+    box-shadow: 0 0 0 9px rgba(214,168,90,0.07), 0 0 0 10px rgba(214,168,90,0.35), 0 0 70px rgba(214,168,90,0.25); }
+  .fp-mind2 .mm-hub::before { content: ""; position: absolute; inset: -24px; border-radius: 50%; border: 1px dashed rgba(214,168,90,0.45); animation: mmspin 50s linear infinite; }
+  .fp-mind2 .mm-hub b { font-size: 20px; }
+  .fp-mind2 .mm-card { padding: 18px 44px 18px 20px; border: 1px solid rgba(236,232,225,0.1); border-radius: 8px;
+    background: linear-gradient(180deg, rgba(24,26,31,0.96), rgba(12,13,16,0.96)); box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), border-color 0.3s, opacity 0.3s; }
+  .fp-mind2 .mm-card::before { content: attr(data-n); position: absolute; top: 15px; right: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: rgba(236,232,225,0.32); }
+  .fp-mind2 .mm-card::after { content: ""; position: absolute; top: 16px; bottom: 16px; width: 2px; border-radius: 2px; background: #d6a85a; }
+  .fp-mind2 .mm-card.l::after { right: -1px; } .fp-mind2 .mm-card.r::after { left: -1px; }
+  .fp-mind2.focus .mm-card:not(.hot) { opacity: 0.45; }
+  .fp-mind2 .mm-card.hot { transform: translateY(-3px); border-color: rgba(214,168,90,0.6); }
+  .fp-mind2 .mm-card.pick { border-color: rgba(214,168,90,0.55); background: linear-gradient(180deg, rgba(214,168,90,0.14), rgba(12,13,16,0.96)); }
+  @media (prefers-reduced-motion: reduce) { .fp-mind2 .mm-wires .w-flow, .fp-mind2 .mm-hub::before { animation: none; } }
+  @media (max-width: 900px) { .fp-mind2 { padding: 22px 16px; } .fp-mind2 .mm-hub::before { display: none; } }
