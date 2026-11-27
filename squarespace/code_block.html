@@ -1,12 +1,12 @@
 <!-- Stefan Sendyk - Media Studies portfolio (Squarespace Code Block loader).
      Paste this whole box into ONE Code Block (with "Display Source Code" switched OFF).
-     It loads the full portfolio (Media_Studies_portfolio101.html) from GitHub, so this box stays small;
+     It loads the full portfolio (Media_Studies_portfolio104.html) from GitHub, so this box stays small;
      to show a newer version later, only the file name / code in PORTFOLIO below needs changing. -->
 <div id="mm-root" style="min-height:60vh;background:#000"></div>
 <script>
 (function () {
-  var PORTFOLIO = 'https://raw.githubusercontent.com/StefanSendyk/Raqueshi/6792b235b1b7165d702ae8590b0318f39b2fd4a3/Media_Studies_portfolio101.html';
-  var BACKUP = 'https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@6792b235b1b7165d702ae8590b0318f39b2fd4a3/Media_Studies_portfolio101.html';
+  var PORTFOLIO = 'https://raw.githubusercontent.com/StefanSendyk/Raqueshi/a19723329b6149a114381afde4b05f7bc623d77d/Media_Studies_portfolio104.html';
+  var BACKUP = 'https://cdn.jsdelivr.net/gh/StefanSendyk/Raqueshi@a19723329b6149a114381afde4b05f7bc623d77d/Media_Studies_portfolio104.html';
   var root = document.getElementById('mm-root');
   function get(url) { return fetch(url, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }); }
   get(PORTFOLIO).catch(function () { return get(BACKUP); }).then(function (html) {
